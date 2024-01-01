@@ -14,7 +14,8 @@
 
 --[[SET NO CLIP CONTROLS BELOW
 USE LINK BELOW TO FIND THE KEYCODE VALUES YOU NEED Thanks to L7NEG for allowing use he's KeyCodes
-https://keycodeinfo.l7neg.repl.co/developers/ ]]
+https://ikeycode.vercel.app/ ]]
+
 
 go_up = 16
 go_down = 17
@@ -27,14 +28,14 @@ inc_speed = 107
 
 --------------------------------------------------------------------------------------------------------------------------------
 
-MenuTab = gui.get_tab("** CSYON SubMenu 1.67 By CSYON**")
+MenuTab = gui.get_tab("** CSYON SubMenu 1.68 By CSYON**")
 
 local function Text(text)
 	MenuTab:add_button(text,  function() end)
 end
 
-Text("  ️Game Build Version 2845⚠️ ")
-Text("                  ✅ v2               ")
+Text("  ️Game Build Version 3095⚠️ ")
+Text("                  ✅ v3               ")
 
 --------------------------------------------------------------------------------------------------------------------------------
 --Thanks for the Casino Script to my Bro @Yimura
@@ -992,12 +993,12 @@ CSYONS4 = CSYON4:add_tab("Snow Toggle Menu")
 --------------------------------------------------------------------------------------------------------------
 
 CSYONS4:add_button("Toggle Snow On", function ()
-           globals.set_int(262145 + 4752, 1)
+           globals.set_int(262145 + 4723, 1)
 end)
 
 
 CSYONS4:add_button("Toggle Snow Off", function ()
-           globals.set_int(262145 + 4752, 0)
+           globals.set_int(262145 + 4723, 0)
 end)
 
 ---------------------------------------------------------------------------------------------------------------------------------
@@ -1007,9 +1008,9 @@ CSYONMW29 = CSYON4:add_tab("Unlock Weapon MW29")
 ---------------------------------------------------------------------------------------------------------------------------------
 
 CSYONMW29:add_button("Enable Weazel Bank Shootout Event", function()
-    globals.set_int(262145 + 34059, 1) -- Tunables:ENABLE_MAZEBANKSHOOTOUT_DLC22022
-    globals.set_int(2756259 + 3 + 1, 172)
-    globals.set_int(2756259 + 2, 6)
+    globals.set_int(262145 + 34547, 1) -- Tunables:ENABLE_MAZEBANKSHOOTOUT_DLC22022
+    globals.set_int(262145 + 3 + 1, 172)
+    globals.set_int(262145 + 2, 6)
 end)
 
 function Status()
@@ -1076,8 +1077,8 @@ CSYONGOOCHLMAO = CSYON4:add_tab("Trigger Gooch Event")
 ----------------------------------------------------------------------------------------------------------------------------------
 
 CSYONGOOCHLMAO:add_button("Spawn Funny Gooch", function()
-    globals.set_int(2756259 + 3 + 1, 171)
-    globals.set_int(2756259 + 2, 6)
+    globals.set_int(2698947 + 3 + 1, 171)
+    globals.set_int(2698947 + 2, 6)
 end)
 
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -1281,32 +1282,35 @@ local function funcCeoBanger(isRunning)
   while isRunning == true do
     local numLifetimeSales = stats.get_int(MPX .. "LIFETIME_SELL_COMPLETE")
     if scrWarehouse:is_active() then
-          globals.set_int(277933, 6000000)
+          globals.set_int(278108 + 15991, 6000000)
+          globals.set_int(277873 + 15756, 0)
+          globals.set_int(277874 + 15757, 0)
         end
-                           globals.set_int(4536673,  0)
-                           globals.set_int(4536673,  0)
+          globals.set_int(4537356,  0)
+          globals.set_int(4537357,  0)
+          globals.set_int(4537358,  0)
 
 
         if scrSecuroServ:is_active() then
-          scrSecuroServ:set_int(736, 1)
+          scrSecuroServ:set_int(739, 1)
           sleep(1)
-          scrSecuroServ:set_int(737, 1)
+          scrSecuroServ:set_int(740, 1)
           sleep(1)
-          scrSecuroServ:set_int(555, 3012)
+          scrSecuroServ:set_int(558, 3012)
         end
 
 -----------------------------------------------------------------------------------------------------------------
 
         if scrSellContraband:is_active() then
-          scrSellContraband:set_int(1135, 1)
-          scrSellContraband:set_int(595, 0)
-          scrSellContraband:set_int(1124, 0)
+          scrSellContraband:set_int(1136, 1)
+          scrSellContraband:set_int(596, 0)
+          scrSellContraband:set_int(1125, 0)
 
 --------------------------------------------------------------------------------------------------------------------
 
-          scrSellContraband:set_int(547, 7)
+          scrSellContraband:set_int(543 + 7, 7)
           sleep(1)
-          scrSellContraband:set_int(541,  99999)
+          scrSellContraband:set_int(543 + 1,  99999)
         end
       end
     end
@@ -1315,10 +1319,10 @@ local function funcCeoBanger(isRunning)
 
     if scrBuyContraband:is_active() then
         sleep(1)
-        scrBuyContraband:set_int(603, 1)
-        scrBuyContraband:set_int(599, 111)  
-        scrBuyContraband:set_int(789, 6)
-        scrBuyContraband:set_int(790, 4)
+        scrBuyContraband:set_int(601 + 5, 1)
+        scrBuyContraband:set_int(601 + 1, 111)  
+        scrBuyContraband:set_int(601 + 191, 6)
+        scrBuyContraband:set_int(601 + 192, 4)
       end
 
 -------------------------------------------------------------------------------------------------------------------
