@@ -189,26 +189,6 @@ end)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-LVLVal = stats.get_int(MPX() .. "CHAR_RANK_FM")
-
-CSYON312312:add_imgui(function()
-	LVLVal = ImGui.SliderInt("Your level", LVLVal, LVLVal, LVLVal)
-end)
-
-RPVal = stats.get_int(MPX() .. "CHAR_XP_FM")
-
-CSYON312312:add_imgui(function()
-	RPVal = ImGui.SliderInt("Your RP Value", RPVal, RPVal, RPVal)
-end)
-
-CCLVLVal = stats.get_int("MPPLY_CURRENT_CREW_RANK")
-
-CSYON312312:add_imgui(function()
-	CCLVLVal = ImGui.SliderInt("Current Crew Level", CCLVLVal, CCLVLVal, CCLVLVal)
-end)
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 CSYON312312 = CSYON:add_tab("Misc Menu 1.69 ")
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
