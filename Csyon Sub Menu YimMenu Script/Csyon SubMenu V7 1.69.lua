@@ -1,29 +1,12 @@
---────────────────────────────────────────────────────────────────────────────────────────
---─██████████████─██████████████─████████──████████─██████████████─██████──────────██████─
---─██░░░░░░░░░░██─██░░░░░░░░░░██─██░░░░██──██░░░░██─██░░░░░░░░░░██─██░░██████████──██░░██─
---─██░░██████████─██░░██████████─████░░██──██░░████─██░░██████░░██─██░░░░░░░░░░██──██░░██─
---─██░░██─────────██░░██───────────██░░░░██░░░░██───██░░██──██░░██─██░░██████░░██──██░░██─
---─██░░██─────────██░░██████████───████░░░░░░████───██░░██──██░░██─██░░██──██░░██──██░░██─
---─██░░██─────────██░░░░░░░░░░██─────████░░████─────██░░██──██░░██─██░░██──██░░██──██░░██─
---─██░░██─────────██████████░░██───────██░░██───────██░░██──██░░██─██░░██──██░░██──██░░██─
---─██░░██─────────────────██░░██───────██░░██───────██░░██──██░░██─██░░██──██░░██████░░██─
---─██░░██████████─██████████░░██───────██░░██───────██░░██████░░██─██░░██──██░░░░░░░░░░██─
---─██░░░░░░░░░░██─██░░░░░░░░░░██───────██░░██───────██░░░░░░░░░░██─██░░██──██████████░░██─
---─██████████████─██████████████───────██████───────██████████████─██████──────────██████─
---────────────────────────────────────────────────────────────────────────────────────────
-
---[[SET NO CLIP CONTROLS BELOW
-USE LINK BELOW TO FIND THE KEYCODE VALUES YOU NEED
-https://ikeycode.vercel.app/ ]]
-
 --Required Stats----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-MPX = PI
-PI = stats.get_int("MPPLY_LAST_MP_CHAR")
-if PI == 0 then
-	MPX = "MP0_"
-else
-	MPX = "MP1_"
+local function MPX()
+	local PI = stats.get_int("MPPLY_LAST_MP_CHAR")
+	if PI == 0 then
+		return "MP0_"
+	else
+		return "MP1_"
+	end
 end
 
 local function SPX()
@@ -135,7 +118,26 @@ TEQUILA = 262145 + 29458
 
 CSYON = gui.get_tab("** CSYON SubMenu 1.69 By CSYON**")
 
-CSYON:add_text("Game Build Version 3274⚠️ ✅ v6")
+CSYON:add_text("                      Game Build Version 3274⚠️")
+CSYON:add_text("                                	✅ v7")
+
+LVLVal = stats.get_int(MPX() .. "CHAR_RANK_FM")
+
+CSYON:add_imgui(function()
+	LVLVal = ImGui.SliderInt("Your level", LVLVal, LVLVal, LVLVal)
+end)
+
+RPVal = stats.get_int(MPX() .. "CHAR_XP_FM")
+
+CSYON:add_imgui(function()
+	RPVal = ImGui.SliderInt("Your RP Value", RPVal, RPVal, RPVal)
+end)
+
+CCLVLVal = stats.get_int("MPPLY_CURRENT_CREW_RANK")
+
+CSYON:add_imgui(function()
+	CCLVLVal = ImGui.SliderInt("Current Crew Level", CCLVLVal, CCLVLVal, CCLVLVal)
+end)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -143,39 +145,102 @@ Self = CSYON:add_tab("Self Menu")
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-StoryMods = CSYON:add_tab("Story Mode Features")
+AGCT = Self:add_checkbox("Unlock Gender Change")
+script.register_looped("UnlockGenderChange", function(script)
+	script:yield()
+	if AGCT:is_enabled() then
+		stats.set_int(MPX() .. "ALLOW_GENDER_CHANGE", 52)
+	else
+		stats.set_int(MPX() .. "ALLOW_GENDER_CHANGE", 52)
+	end
+end)
+
+RTPT = Self:add_checkbox("Remove Transaction Error")
+script.register_looped("Remove Transaction Error", function(script)
+	script:yield()
+	if RTPT:is_enabled() then
+		globals.set_int(4537456, 0)
+		globals.set_int(4537457, 0)
+		globals.set_int(4537458, 0)
+	else
+	end
+end)
+
+Self:add_button("Remove Orbital Cannon Cooldown", function()
+	stats.set_int(MPX() .. "ORBITAL_CANNON_COOLDOWN", 0)
+end)
+
+Self:add_button("Refil Nightclub Popularity", function()
+	stats.set_int(MPX() .. "CLUB_POPULARITY", 1000)
+end)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Self:add_button("Refill Inventory/Armour", function()
+	stats.set_int(MPX() .. "NO_BOUGHT_YUM_SNACKS", 30)
+	stats.set_int(MPX() .. "NO_BOUGHT_HEALTH_SNACKS", 15)
+	stats.set_int(MPX() .. "NO_BOUGHT_EPIC_SNACKS", 5)
+	stats.set_int(MPX() .. "NUMBER_OF_CHAMP_BOUGHT", 5)
+	stats.set_int(MPX() .. "NUMBER_OF_ORANGE_BOUGHT", 11)
+	stats.set_int(MPX() .. "NUMBER_OF_BOURGE_BOUGHT", 10)
+	stats.set_int(MPX() .. "NUMBER_OF_SPRUNK_BOUGHT", 10)
+	stats.set_int(MPX() .. "CIGARETTES_BOUGHT", 20)
+	stats.set_int(MPX() .. "MP_CHAR_ARMOUR_1_COUNT", 10)
+	stats.set_int(MPX() .. "MP_CHAR_ARMOUR_2_COUNT", 10)
+	stats.set_int(MPX() .. "MP_CHAR_ARMOUR_3_COUNT", 10)
+	stats.set_int(MPX() .. "MP_CHAR_ARMOUR_4_COUNT", 10)
+	stats.set_int(MPX() .. "MP_CHAR_ARMOUR_5_COUNT", 10)
+	stats.set_int(MPX() .. "BREATHING_APPAR_BOUGHT", 20)
+end)
+
+Self:add_button("Refill Inv/Armour x1000", function()
+	stats.set_int(MPX() .. "NO_BOUGHT_YUM_SNACKS", 1000)
+	stats.set_int(MPX() .. "NO_BOUGHT_HEALTH_SNACKS", 1000)
+	stats.set_int(MPX() .. "NO_BOUGHT_EPIC_SNACKS", 1000)
+	stats.set_int(MPX() .. "NUMBER_OF_CHAMP_BOUGHT", 1000)
+	stats.set_int(MPX() .. "NUMBER_OF_ORANGE_BOUGHT", 1000)
+	stats.set_int(MPX() .. "NUMBER_OF_BOURGE_BOUGHT", 1000)
+	stats.set_int(MPX() .. "NUMBER_OF_SPRUNK_BOUGHT", 1000)
+	stats.set_int(MPX() .. "CIGARETTES_BOUGHT", 1000)
+	stats.set_int(MPX() .. "MP_CHAR_ARMOUR_1_COUNT", 1000)
+	stats.set_int(MPX() .. "MP_CHAR_ARMOUR_2_COUNT", 1000)
+	stats.set_int(MPX() .. "MP_CHAR_ARMOUR_3_COUNT", 1000)
+	stats.set_int(MPX() .. "MP_CHAR_ARMOUR_4_COUNT", 1000)
+	stats.set_int(MPX() .. "MP_CHAR_ARMOUR_5_COUNT", 1000)
+	stats.set_int(MPX() .. "BREATHING_APPAR_BOUGHT", 1000)
+end)
+
+StoryCharacters = CSYON:add_tab("Story Mode")
+
 CurrentSPMoneyValue = stats.get_int(SPX() .. "TOTAL_CASH")
-StoryMods:add_imgui(function()
+StoryCharacters:add_imgui(function()
 	CurrentSPMoneyValue, used = ImGui.SliderInt("Current Character Cash", CurrentSPMoneyValue, 1, 2147483646)
 	if used then
 		stats.set_int(SPX() .. "TOTAL_CASH", CurrentSPMoneyValue)
 	end
 end)
 
-StoryMods:add_separator()
+StoryCharacters:add_separator()
 
-StoryMods:add_button("Add 1 Mil Cash $", function()
+StoryCharacters:add_button("Add 1 Mil Cash $", function()
 	stats.set_int(SPX() .. "TOTAL_CASH", stats.get_int(SPX() .. "TOTAL_CASH") + 1000000)
 end)
 
-StoryMods:add_button("Add 10 Mil Cash $", function()
+StoryCharacters:add_button("Add 10 Mil Cash $", function()
 	stats.set_int(SPX() .. "TOTAL_CASH", stats.get_int(SPX() .. "TOTAL_CASH") + 10000000)
 end)
 
-StoryMods:add_button("Add 100 Mil Cash $", function()
+StoryCharacters:add_button("Add 100 Mil Cash $", function()
 	stats.set_int(SPX() .. "TOTAL_CASH", stats.get_int(SPX() .. "TOTAL_CASH") + 100000000)
 end)
 
-StoryMods:add_button("Add 1 Bil Cash $", function()
+StoryCharacters:add_button("Add 1 Bil Cash $", function()
 	stats.set_int(SPX() .. "TOTAL_CASH", stats.get_int(SPX() .. "TOTAL_CASH") + 1000000000)
 end)
 
-StoryMods:add_separator()
+StoryCharacters:add_separator()
 
-StoryMods:add_button("Max Current Character Skills", function()
+StoryCharacters:add_button("Max Current Character Skills", function()
 	stats.set_int(SPX() .. "SPECIAL_ABILITY_UNLOCKED", 100)
 	stats.set_float(SPX() .. "DIST_RUNNING", 175 * 100)
 	stats.set_int(SPX() .. "TIME_UNDERWATER", 30 * 60 * 1000 * 100)
@@ -189,96 +254,73 @@ end)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CSYON312312 = CSYON:add_tab("Misc Menu 1.69 ")
+TunMenu = CSYON:add_tab("Tunables Menu")
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-UGC = Self:add_checkbox("Unlock Gender Change")
-script.register_looped("UnlockGenderChange", function(script)
-	script:yield()
-	if UGC:is_enabled() then
-		stats.set_int(MPX() .. "ALLOW_GENDER_CHANGE", 52)
-	else
-		stats.set_int(MPX() .. "ALLOW_GENDER_CHANGE", 52)
+rpmvalue = globals.get_float(262145 + 1)
+TunMenu:add_imgui(function()
+	rpmvalue, used = ImGui.DragInt("RP", rpmvalue, 1, 100000)
+	if used then
+		globals.set_float(262145 + 1, rpmvalue)
 	end
 end)
 
-Self:add_button("Remove Orbital Cannon Cooldown", function()
-	STATS.STAT_SET_INT(joaat(MPX .. "ORBITAL_CANNON_COOLDOWN"), 0, true)
-end)
-
-LEL = Self:add_checkbox("Remove Transaction Error")
-script.register_looped("Remove Transaction Error", function(script)
-		script:yield()
-	if LEL:is_enabled() then
-		globals.set_int(4537456, 0)
-		globals.set_int(4537457, 0)
-		globals.set_int(4537458, 0)
-	else
+apmvalue = globals.get_float(262145 + 25490)
+TunMenu:add_imgui(function()
+	apmvalue, used = ImGui.DragInt("AP", apmvalue, 1, 100000)
+	if used then
+		globals.set_float(262145 + 25490, apmvalue)
 	end
 end)
 
-Self:add_button("Refil Nightclub Popularity", function()
-	STATS.STAT_SET_INT(joaat(MPX .. "CLUB_POPULARITY"), 1000, true)
+srmvalue = globals.get_float(262145 + 30980)
+TunMenu:add_imgui(function()
+	srmvalue, used = ImGui.DragInt("Street Races", srmvalue, 1, 100000)
+	if used then
+		globals.set_float(262145 + 30980, srmvalue)
+	end
+end)
+
+pmvalue = globals.get_float(262145 + 30981)
+TunMenu:add_imgui(function()
+	pmvalue, used = ImGui.DragInt("Pursuits", pmvalue, 1, 100000)
+	if used then
+		globals.set_float(262145 + 30981, pmvalue)
+	end
+end)
+
+f2fmvalue = globals.get_float(262145 + 30982)
+TunMenu:add_imgui(function()
+	f2fmvalue, used = ImGui.DragInt("Face2Face", f2fmvalue, 1, 100000)
+	if used then
+		globals.set_float(262145 + 30982, f2fmvalue)
+	end
+end)
+
+lscmmvalue = globals.get_float(262145 + 30983)
+TunMenu:add_imgui(function()
+	lscmmvalue, used = ImGui.DragInt("LS Car Meet", lscmmvalue, 1, 100000)
+	if used then
+		globals.set_float(262145 + 30983, lscmmvalue)
+	end
+end)
+
+lscmotmvalue = globals.get_float(262145 + 30984)
+TunMenu:add_imgui(function()
+	lscmotmvalue, used = ImGui.DragInt("LS Car Meet on track", lscmotmvalue, 1, 100000)
+	if used then
+		globals.set_float(262145 + 30984, lscmotmvalue)
+	end
 end)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Self:add_button("Refill Inventory/Armour", function()
-	STATS.STAT_SET_INT(joaat(MPX .. "NO_BOUGHT_YUM_SNACKS"), 30, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "NO_BOUGHT_HEALTH_SNACKS"), 15, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "NO_BOUGHT_EPIC_SNACKS"), 5, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "NUMBER_OF_CHAMP_BOUGHT"), 5, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "NUMBER_OF_ORANGE_BOUGHT"), 11, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "NUMBER_OF_BOURGE_BOUGHT"), 10, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "NUMBER_OF_SPRUNK_BOUGHT"), 10, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "CIGARETTES_BOUGHT"), 20, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "MP_CHAR_ARMOUR_1_COUNT"), 10, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "MP_CHAR_ARMOUR_2_COUNT"), 10, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "MP_CHAR_ARMOUR_3_COUNT"), 10, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "MP_CHAR_ARMOUR_4_COUNT"), 10, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "MP_CHAR_ARMOUR_5_COUNT"), 10, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "BREATHING_APPAR_BOUGHT"), 20, true)
-end)
-
-Self:add_button("Refill Inv/Armour x9999", function()
-	STATS.STAT_SET_INT(joaat(MPX .. "NO_BOUGHT_YUM_SNACKS"), 9999, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "NO_BOUGHT_HEALTH_SNACKS"), 9999, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "NO_BOUGHT_EPIC_SNACKS"), 9999, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "NUMBER_OF_CHAMP_BOUGHT"), 9999, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "NUMBER_OF_ORANGE_BOUGHT"), 9999, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "NUMBER_OF_BOURGE_BOUGHT"), 9999, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "NUMBER_OF_SPRUNK_BOUGHT"), 9999, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "CIGARETTES_BOUGHT"), 9999, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "MP_CHAR_ARMOUR_1_COUNT"), 9999, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "MP_CHAR_ARMOUR_2_COUNT"), 9999, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "MP_CHAR_ARMOUR_3_COUNT"), 9999, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "MP_CHAR_ARMOUR_4_COUNT"), 9999, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "MP_CHAR_ARMOUR_5_COUNT"), 9999, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "BREATHING_APPAR_BOUGHT"), 9999, true)
-end)
+OnlineServicesMenu = CSYON:add_tab("Online Services Menu")
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CSYON300 = CSYON:add_tab("Casino Menu")
+CasinoServicesMenu = OnlineServicesMenu:add_tab("Casino Services Menu")
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
----Thanks for the Casino Script to my Bro @Yimura
-MenuTab = gui.get_tab("GUI_TAB_NETWORK"):add_tab("Csyon Casino Options") --IT'S NOT AL ANYMORE! IT'S DUNK! 
-blackjack_cards         = 112
-blackjack_table_players = 1772
-blackjack_decks         = 846
-
-three_card_poker_cards           = blackjack_cards
-three_card_poker_table           = 745
-three_card_poker_current_deck    = 168
-three_card_poker_anti_cheat      = 1034
-three_card_poker_anti_cheat_deck = 799
-three_card_poker_deck_size       = 55
-
-roulette_master_table   = 120
-roulette_outcomes_table = 1357
-roulette_ball_table     = 153
 
 slots_random_results_table = 1348
 
@@ -288,36 +330,14 @@ prize_wheel_prize_state = 45
 
 globals_tuneable = 262145
 
-casino_heist_cut        = 1971696
-casino_heist_cut_offset = 1497 + 736 + 92
-casino_heist_lester_cut = 28998
-casino_heist_gunman_cut = 29024
-casino_heist_driver_cut = 29029
-casino_heist_hacker_cut = 29035
-
-casino_heist_approach      = 0
-casino_heist_target        = 0
-casino_heist_last_approach = 0
-casino_heist_hard          = 0
-casino_heist_gunman        = 0
-casino_heist_driver        = 0
-casino_heist_hacker        = 0
-casino_heist_weapons       = 0
-casino_heist_cars          = 0
-casino_heist_masks         = 0
-
-mpply_last_mp_char = -1
-
 fm_mission_controller_cart_grab = 10255
 fm_mission_controller_cart_grab_speed = 14
 fm_mission_controller_cart_autograb = false
 
-bypass_casino_bans = casino_gui:add_checkbox("Bypass Casino Cooldown")
-casino_gui:add_text("Winning too much too quickly might get you banned, enable this at your own risk.")
-casino_gui:add_separator()
-
+CasinoServicesMenu:add_separator()
+CasinoServicesMenu:add_text("Casino Chips")
 chipsVal = 1800
-casino_gui:add_imgui(function()
+CasinoServicesMenu:add_imgui(function()
 	chipsVal, used = ImGui.SliderInt("Casino Chips Buy Limit", chipsVal, 1800, 2147483647)
 	if used then
 		globals.set_int(CCBL0, chipsVal)
@@ -325,103 +345,16 @@ casino_gui:add_imgui(function()
 	end
 end)
 
+bypass_casino_bans = CasinoServicesMenu:add_checkbox("Bypass Casino Cooldown")
+CasinoServicesMenu:add_text("Winning too much too quickly might get you banned, enable this at your own risk.")
+CasinoServicesMenu:add_separator()
+
 CasinoServicesMenu:add_separator()
 CasinoServicesMenu:add_text("Slots")
 rig_slot_machine = CasinoServicesMenu:add_checkbox("Rig Slot Machines")
 
-casino_gui:add_text("Poker") --If his name is Al Pacino and he said, "It's not Al anymore, it's Dunk!", then his name should now be Dunk Pacino.
-force_poker_cards = casino_gui:add_checkbox("Force all Players Hands to Royal Flush")
-casino_gui:add_sameline()
-set_dealers_poker_cards = casino_gui:add_checkbox("Force Dealer's Hand to Bad Beat")
-set_dealers_poker_cards:set_enabled(true)
-
-function set_character_stat (stat_name, value_to_set)
-    STATS.STAT_SET_INT(joaat("MP"..mpply_last_mp_char.."_"..stat_name), value_to_set, true)
-end
-
-function get_character_stat (stat_name)
-    _,retval = STATS.STAT_GET_INT(joaat("MP"..mpply_last_mp_char.."_"..stat_name), 0, -1)
-    return retval
-end
-
-function set_poker_cards(player_id, players_current_table, card_one, card_two, card_three)
-    locals.set_int("three_card_poker", (three_card_poker_cards) + (three_card_poker_current_deck) + (1 + (players_current_table * three_card_poker_deck_size)) + (2) + (1) + (player_id * 3), card_one)
-    locals.set_int("three_card_poker", (three_card_poker_anti_cheat) + (three_card_poker_anti_cheat_deck) + (1) + (1 + (players_current_table * three_card_poker_deck_size)) + (1) + (player_id * 3), card_one)
-    locals.set_int("three_card_poker", (three_card_poker_cards) + (three_card_poker_current_deck) + (1 + (players_current_table * three_card_poker_deck_size)) + (2) + (2) + (player_id * 3), card_two)
-    locals.set_int("three_card_poker", (three_card_poker_anti_cheat) + (three_card_poker_anti_cheat_deck) + (1) + (1 + (players_current_table * three_card_poker_deck_size)) + (2) + (player_id * 3), card_two)
-    locals.set_int("three_card_poker", (three_card_poker_cards) + (three_card_poker_current_deck) + (1 + (players_current_table * three_card_poker_deck_size)) + (2) + (3) + (player_id * 3), card_three)
-    locals.set_int("three_card_poker", (three_card_poker_anti_cheat) + (three_card_poker_anti_cheat_deck) + (1) + (1 + (players_current_table * three_card_poker_deck_size)) + (3) + (player_id * 3), card_three)
-end
-
-function get_cardname_from_index(card_index)
-    if card_index == 0 then
-        return "Rolling"
-    end
-
-    local card_number = math.fmod(card_index, 13)
-    local cardName = ""
-    local cardSuit = ""
-
-    if card_number == 1 then
-        cardName = "Ace"
-    elseif card_number == 11 then
-        cardName = "Jack"
-    elseif card_number == 12 then
-        cardName = "Queen"
-    elseif card_number == 13 then
-        cardName = "King"
-    else
-        cardName = tostring(card_number)
-    end
-
-    if card_index >= 1 and card_index <= 13 then
-        cardSuit = "Clubs"
-    elseif card_index >= 14 and card_index <= 26 then
-        cardSuit = "Diamonds"
-    elseif card_index >= 27 and card_index <= 39 then
-        cardSuit = "Hearts"
-    elseif card_index >= 40 and card_index <= 52 then
-        cardSuit = "Spades"
-    end
-
-    return cardName .. " of " .. cardSuit
-end
-
-casino_gui:add_separator()
-casino_gui:add_text("Blackjack")
-casino_gui:add_text("Dealer's face down card: ")
-casino_gui:add_sameline()
-dealers_card_gui_element = casino_gui:add_input_string("##dealers_card_gui_element")
-
-casino_gui:add_button("Set Dealer's Hand To Bust", function()
-    script.run_in_fiber(function (script)
-        local player_id = PLAYER.PLAYER_ID()
-        while NETWORK.NETWORK_GET_HOST_OF_SCRIPT("blackjack", -1, 0) ~= player_id and NETWORK.NETWORK_GET_HOST_OF_SCRIPT("blackjack", 0, 0) ~= player_id and NETWORK.NETWORK_GET_HOST_OF_SCRIPT("blackjack", 1, 0) ~= player_id and NETWORK.NETWORK_GET_HOST_OF_SCRIPT("blackjack", 2, 0) ~= player_id and NETWORK.NETWORK_GET_HOST_OF_SCRIPT("blackjack", 3, 0) ~= player_id do 
-            network.force_script_host("blackjack")
-            gui.show_message("CasinoPacino", "Taking control of the blackjack script.") --If you see this spammed, someone if fighting you for control.
-            script:yield()
-        end
-        local blackjack_table = locals.get_int("blackjack", blackjack_table_players + 1 + (player_id * 8) + 4) --The Player's current table he is sitting at.
-        if blackjack_table ~= -1 then
-            locals.set_int("blackjack", blackjack_cards + blackjack_decks + 1 + (blackjack_table * 13) + 1, 11)
-            locals.set_int("blackjack", blackjack_cards + blackjack_decks + 1 + (blackjack_table * 13) + 2, 12)
-            locals.set_int("blackjack", blackjack_cards + blackjack_decks + 1 + (blackjack_table * 13) + 3, 13)
-            locals.set_int("blackjack", blackjack_cards + blackjack_decks + 1 + (blackjack_table * 13) + 12, 3)
-        end
-    end)
-end)
-
-casino_gui:add_separator()
-casino_gui:add_text("Roulette")
-force_roulette_wheel = casino_gui:add_checkbox("Force Roulette Wheel to Land On Red 18")
-
-casino_gui:add_separator()
-casino_gui:add_text("Slots")
-rig_slot_machine = casino_gui:add_checkbox("Rig Slot Machines")
-rig_slot_machine_keeper = false
-
-casino_gui:add_separator()
-casino_gui:add_text("Lucky Wheel")
+CasinoServicesMenu:add_separator()
+CasinoServicesMenu:add_text("Lucky Wheel")
 
 CasinoServicesMenu:add_button("Give Podium Vehicle", function()
 	script.run_in_fiber(function(script)
@@ -537,96 +470,39 @@ if HUD.IS_PAUSE_MENU_ACTIVE() then
 	PAD.DISABLE_CONTROL_ACTION(0, 204, true)
 end
 
---TWVuIGFyZSBub3Qgd29tZW47IHRyYW5zZ2VuZGVycyBhcmUgbWVudGFsbHkgaWxsIGF1dGlzdGljcy4=
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+DLCUnlockerMenu = CSYON:add_tab("1.69 Unlocker Menu")
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CSYON3 = CSYON:add_tab("Unlocker Menu 1.69 ")
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-CSYON3:add_button("Unlock Police Cars Trade Price", function()
+DLCUnlockerMenu:add_button("Unlock Police Cars Trade Price", function()
 	stats.set_int(MPX() .. "MOST_TIME_ON_3_PLUS_STARS", 300000)
 	stats.set_int(MPX() .. "SALV23_SCOPE_BS", -1)
 	stats.set_int(MPX() .. "SALV23_INST_PROG", -1)
 	stats.set_int(MPX() .. "SALV23_GEN_BS", -1)
 end)
 
-CSYON3:add_button("Unlock Xmass 2023 Gifts", function()
+DLCUnlockerMenu:add_button("Unlock Xmass 2023 Gifts", function()
 	globals.set_int(262145 + 35157, 1) --XMASGIFTS2023
 	globals.set_int(262145 + 35158, 1) --NEWYEARSGIFTS2023
 end)
 
-CSYON3:add_button("Unlock Baseball n Knife Skins In GunVan", function()
-	globals.set_int(262145 + 34365, 0)
-	globals.set_int(262145 + 34328 + 9, -1716189206) ----- Knife
-	globals.set_int(262145 + 34328 + 10, -1786099057) ----- BaseBall Bat
+DLCUnlockerMenu:add_button("Unlock Taxi Livery for Eudora", function()
+	stats.set_masked_int(MPX() .. "DLC22022PSTAT_INT536", 10, 16, 8)
 end)
 
-CSYON3:add_button("Unlock Police Cars Price Trade", function()
-	stats.set_int(MPX .. "MOST_TIME_ON_3_PLUS_STARS", 300000)
-	stats.set_int(MPX .. "SALV23_SCOPE_BS", -1)
-	stats.set_int(MPX .. "SALV23_INST_PROG", -1)
-	stats.set_int(MPX .. "SALV23_GEN_BS", -1)
+DLCUnlockerMenu:add_button("Unlock Taxi Livery for Broadway", function()
+	stats.set_int(MPX() .. "AWD_TAXIDRIVER", 50)
 end)
 
-CSYON3:add_button("Unlock New Vehicles 1.68", function()
-	globals.set_int(262145 + 36301, 1)
-	globals.set_int(262145 + 36286, 1)
-	globals.set_int(262145 + 36291, 1)
-	globals.set_int(262145 + 36302, 1)
-	globals.set_int(262145 + 36296, 1)
-	globals.set_int(262145 + 36295, 1)
-	globals.set_int(262145 + 36300, 1)
-	globals.set_int(262145 + 36293, 1)
-	globals.set_int(262145 + 36296, 1)
-	globals.set_int(262145 + 36298, 1)
-	globals.set_int(262145 + 36292, 1)
-	globals.set_int(262145 + 36287, 1)
-	globals.set_int(262145 + 36285, 1)
-	globals.set_int(262145 + 36297, 1)
-	globals.set_int(262145 + 36304, 1)
-	globals.set_int(262145 + 36303, 1)
-	globals.set_int(262145 + 36289, 1)
-	globals.set_int(262145 + 36288, 1)
-	globals.set_int(262145 + 36290, 1)
-end)
+DLCUnlockerMenu:add_separator()
+DLCUnlockerMenu:add_text("Removed Vehicles")
 
-CSYON3:add_button("Enable Xmas 2023 Gifts", function()
-	globals.set_int(262145 + 36250, 1) --XMASGIFTS2023
-	globals.set_int(262145 + 36251, 1) --NEWYEARSGIFTS2023
-end)
-
-CSYON3:add_button("Unlock Missed Guns In The GunVan", function()
-	globals.set_int(262145 + 34328 + 5, -22923932) ----- RailGun
-	globals.set_int(262145 + 34328 + 6, -1238556825) ----- WidoMaker
-	globals.set_int(262145 + 34328 + 7, -1355376991) ----- RayPistol
-	globals.set_int(262145 + 34328 + 8, 1198256469) ----- HellBringer
-	globals.set_int(262145 + 34328 + 9, 350597077) ----- TecPistol
-	globals.set_int(262145 + 34328 + 10, 2138347493) ----- FireWork Launcher
-end)
-
-CSYON3:add_button("Unlock Taxi Livery for Eudora", function()
-	PlayerIndex = globals.get_int(1574925)
-	if PlayerIndex == 0 then
-		MPX = "MP0_"
-	else
-		MPX = "MP1_"
-	end
-	STATS.STAT_SET_MASKED_INT(MPX .. "DLC22022PSTAT_INT536", 10, 16, 8)
-end)
-
-CSYON3:add_button("Unlock Taxi Livery for Broadway", function()
-	STATS.STAT_SET_INT(joaat(MPX .. "AWD_TAXIDRIVER"), 50, true)
-end)
-
-CSYON3:add_separator()
-CSYON3:add_text("Removed Vehicles")
-
-RV = CSYON3:add_checkbox("Enable Deleted Vehicles")
+DVT = DLCUnlockerMenu:add_checkbox("Enable Deleted Vehicles")
 script.register_looped("Deleted Vehicles", function(script)
 	script:yield()
-	if RV:is_enabled() then
+	if DVT:is_enabled() then
 		globals.set_int(262145 + 22565, 1)
 		globals.set_int(262145 + 14708, 1)
 		globals.set_int(262145 + 34371, 1)
@@ -1029,38 +905,64 @@ end)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CSYONEVENTS = CSYON:add_tab("Events Menu")
+EventsMenu = CSYON:add_tab("Events Menu")
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CSYONSNOW = CSYONEVENTS:add_tab("Snowy Toggle Menu")
+SnowToggleMenu = EventsMenu:add_tab("Snow Toggle Menu")
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CSYONSNOW:add_button("Activate Snow", function()
-	globals.set_int(262145 + 4575, 1)
-end)
-
-CSYONSNOW:add_button("Deactivate Snow", function()
-	globals.set_int(262145 + 4575, 0)
+SNOWCB = SnowToggleMenu:add_checkbox("Snow")
+script.register_looped("snow", function(script)
+	script:yield()
+	if SNOWCB:is_enabled() then
+		globals.set_int(SNOW, 1)
+	else
+		globals.set_int(SNOW, 0)
+	end
 end)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ---Full Account Unlocker Tool---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CADWC = CSYON:add_tab("Full Account Unlock Menu")
+FAUT = CSYON:add_tab("Full Account Unlock Menu")
 
 --Character's Stats-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CSU = CADWC:add_tab("Character Stats")
+CSU = FAUT:add_tab("Character's Stats")
+
+CSU:add_button("Max Character Skills", function()
+	stats.set_int(MPX() .. "SCRIPT_INCREASE_DRIV", 100)
+	stats.set_int(MPX() .. "SCRIPT_INCREASE_FLY", 100)
+	stats.set_int(MPX() .. "SCRIPT_INCREASE_LUNG", 100)
+	stats.set_int(MPX() .. "SCRIPT_INCREASE_SHO", 100)
+	stats.set_int(MPX() .. "SCRIPT_INCREASE_STAM", 100)
+	stats.set_int(MPX() .. "SCRIPT_INCREASE_STL", 100)
+	stats.set_int(MPX() .. "SCRIPT_INCREASE_STRN", 100)
+end)
 
 AcMenu = CSU:add_tab("Achievements")
 
 Acv0 = false
-AG = 4543283 + 1
+AG = 4543384 + 1
 
-AcMMenu = AcMenu:add_tab("Unlock all Achievements")
+
+AcMenu:add_button("Unlock All Achievements", function()
+	script.run_in_fiber(function(script)
+		for i = 0, 77 do
+			script:sleep(200)
+			globals.set_int(AG, i)
+		if i == 77 then
+			gui.show_message("Achivements", "Unlocked 77 Achivements")
+		end
+		end
+	end)
+end)
+
+
+AcMMenu = AcMenu:add_tab("Unlock One By One Menu")
 
 AcMMenu:add_button("Welcome to Los Santos", function()
 	globals.set_int(AG, 1)
@@ -1296,78 +1198,12 @@ end)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-TunablessMenu = CSYON:add_tab("Tunables Menu")
-
-rpmvalue = globals.get_float(262145 + 1)
-TunablessMenu:add_imgui(function()
-	rpmvalue, used = ImGui.DragInt("RP", rpmvalue, 1, 100000)
-	if used then
-		globals.set_float(262145 + 1, rpmvalue)
-	end
-end)
-
-apmvalue = globals.get_float(262145 + 25490)
-TunablessMenu:add_imgui(function()
-	apmvalue, used = ImGui.DragInt("AP", apmvalue, 1, 100000)
-	if used then
-		globals.set_float(262145 + 25490, apmvalue)
-	end
-end)
-
-srmvalue = globals.get_float(262145 + 30980)
-TunablessMenu:add_imgui(function()
-	srmvalue, used = ImGui.DragInt("Street Races", srmvalue, 1, 100000)
-	if used then
-		globals.set_float(262145 + 30980, srmvalue)
-	end
-end)
-
-pmvalue = globals.get_float(262145 + 30981)
-TunablessMenu:add_imgui(function()
-	pmvalue, used = ImGui.DragInt("Pursuits", pmvalue, 1, 100000)
-	if used then
-		globals.set_float(262145 + 30981, pmvalue)
-	end
-end)
-
-f2fmvalue = globals.get_float(262145 + 30982)
-TunablessMenu:add_imgui(function()
-	f2fmvalue, used = ImGui.DragInt("Face2Face", f2fmvalue, 1, 100000)
-	if used then
-		globals.set_float(262145 + 30982, f2fmvalue)
-	end
-end)
-
-lscmmvalue = globals.get_float(262145 + 30983)
-TunablessMenu:add_imgui(function()
-	lscmmvalue, used = ImGui.DragInt("LS Car Meet", lscmmvalue, 1, 100000)
-	if used then
-		globals.set_float(262145 + 30983, lscmmvalue)
-	end
-end)
-
-lscmotmvalue = globals.get_float(262145 + 30984)
-TunablessMenu:add_imgui(function()
-	lscmotmvalue, used = ImGui.DragInt("LS Car Meet on track", lscmotmvalue, 1, 100000)
-	if used then
-		globals.set_float(262145 + 30984, lscmotmvalue)
-	end
-end)
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-function unlock_packed_bools(from, to)
-	for i = from, to do
-		stats.set_packed_stat_bool(i, true)
-	end
-end
-
 -- Look for what reads DISABLE_DAILY_OBJECTIVES and then there should be a while loop that stops at 3.
 local current_objectives_global = 2359296
 local weekly_words_global = 2737992
 local objectives_state_global = 1574744
 
-CADWC:add_button("Complete All Daily & Weekly Challenges", function()
+FAUT:add_button("Complete All Daily & Weekly Challenges", function()
 	script.run_in_fiber(function(script)
 		for i = 0, 2 do --Unlock all daily rewards.
 			local objective = globals.get_int(current_objectives_global + (1 + (0 * 5570)) + 681 + 4244 + (1 + (i * 3)))
@@ -1381,7 +1217,7 @@ CADWC:add_button("Complete All Daily & Weekly Challenges", function()
 	end)
 end)
 
-CADWC:add_separator()
+FAUT:add_separator()
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1392,17 +1228,23 @@ function unlock_packed_bools(from, to)
 end
 
 local function Text(text)
-	CADWC:add_text(text, function() end)
+	FAUT:add_text(text, function() end)
 end
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-wasabi_words = CSYON:add_tab("Unlock All Menu By ShinyWasabi") --WasabiWords™️
-
-wasabi_words:add_button("Unlock All", function() --Original script by ShinyWasabi
-	script.run_in_fiber(function(script)
-		local is_player_male = (ENTITY.GET_ENTITY_MODEL(PLAYER.PLAYER_PED_ID()) == joaat("mp_m_freemode_01"))
-		unlock_packed_bools(110, 113) --Red Check Pajamas, Green Check Pajamas, Black Check Pajamas, I Heart LC T-shirt
+Text("==========================")
+Text("One Click Unlocker Section")
+Text("==========================")
+Text("Rewards,Unlocks,Progess And")
+Text("Achievements")
+Text("Make Sure You have 50 mil In Every")
+Text("Business")
+Text("In The Game Before Applying In Do a")
+Text("Sale Of ")
+Text("Each Business And Do a Round In")
+Text("Shooting Range After You Activate It")
+Text("Join a New Session To Apply ")
+Text("==========================")
+FAUT:add_button("Unlock All", function()
+	unlock_packed_bools(110, 113) --Red Check Pajamas, Green Check Pajamas, Black Check Pajamas, I Heart LC T-shirt
 	unlock_packed_bools(115, 115) --Roosevelt
 	unlock_packed_bools(124, 124) --Sanctus
 	unlock_packed_bools(129, 129) --Albany Hermes
@@ -4174,24 +4016,10 @@ wasabi_words:add_button("Unlock All", function() --Original script by ShinyWasab
 	stats.set_int(MPX() .. "SALV23_GEN_BS", -1) -- polgauntlet trade price
 	stats.set_int(MPX() .. "SALV23_SCOPE_BS", -1) -- police5 trade price
 	stats.set_int(MPX() .. "MOST_TIME_ON_3_PLUS_STARS", 300000) -- police4 trade price
-		for i = 0, 2 do --Unlock all daily rewards.
-			local objective = globals.get_int(current_objectives_global + (1 + (0 * 5569)) + 681 + 4243 + (1 + (i * 3)))
-			globals.set_int(objectives_state_global + 1 + (1 + (i * 1)), objective)
-		end
-		globals.set_int(objectives_state_global, 1)
-		globals.set_int(
-			weekly_words_global + (1 + (0 * 6)) + 1,
-			globals.get_int(weekly_words_global + (1 + (0 * 6)) + 2)
-		) --Unlock Weekly Objective
-		gui.show_message("WasabiWordsTM", "Clichés Subverted")
-	end)
 end)
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-CADWC:add_separator()
+FAUT:add_separator()
 Text("==========================")
-CADWC:add_button("Time Related Stats 1 Click Only", function()
+FAUT:add_button("Time Related Stats 1 Click Only", function()
 	stats.set_int("MPPLY_TOTAL_PLAYING_TIME", 2073600000)
 	stats.set_int("MPPLY_LEADERBOARD_PLAYING_TIME", 2073600000)
 	stats.set_int("MPPLY_MP_PLAYING_TIME_NEW", 2073600000)
@@ -4258,9 +4086,9 @@ CADWC:add_button("Time Related Stats 1 Click Only", function()
 	stats.set_int(MPX() .. "TOTAL_TIME_UNDERWATER", 1047483647)
 	stats.set_int(MPX() .. "TOTAL_TIME_CINEMA", 1047483647)
 end)
-CADWC:add_separator()
+FAUT:add_separator()
 Text("==========================")
-CADWC:add_button("Bools Unlocks 1 Click Only", function()
+FAUT:add_button("Bools Unlocks 1 Click Only", function()
 	stats.set_bool(MPX() .. "AWD_TEEING_OFF", true)
 	stats.set_bool(MPX() .. "AWD_PARTY_NIGHT", true)
 	stats.set_bool(MPX() .. "AWD_BILLIONAIRE_GAMES", true)
@@ -4501,8 +4329,8 @@ CADWC:add_button("Bools Unlocks 1 Click Only", function()
 	stats.set_bool("MPPLY_AWD_GANGOPS_MISSILE", true)
 end)
 
-CADWC:add_separator()
-CADWC:add_button("Unlock Diamond Casino Heist Outfits", function()
+FAUT:add_separator()
+FAUT:add_button("Unlock Diamond Casino Heist Outfits", function()
 	stats.set_bool_masked(MPX() .. "CASINOHSTPSTAT_BOOL1", true, 63) -- Refuse Collectors
 	stats.set_bool_masked(MPX() .. "CASINOHSTPSTAT_BOOL2", true, 0) -- Undertakers
 	stats.set_bool_masked(MPX() .. "CASINOHSTPSTAT_BOOL2", true, 1) -- Valet Outfits
@@ -4527,8 +4355,16 @@ CADWC:add_button("Unlock Diamond Casino Heist Outfits", function()
 	stats.set_bool_masked(MPX() .. "CASINOHSTPSTAT_BOOL2", true, 22) -- Infiltration: Modernized Tech
 end)
 
-CADWC:add_separator()
-CADWC:add_button("Unlock Oppressor MKII Trade Price", function()
+FAUT:add_separator()
+FAUT:add_button("Unlock Taxi Livery for Eudora", function()
+	stats.set_masked_int(MPX() .. "DLC22022PSTAT_INT536", 10, 16, 8)
+end)
+
+FAUT:add_button("Unlock Taxi Livery for Broadway", function()
+	stats.set_int(MPX() .. "AWD_TAXIDRIVER", 50)
+end)
+
+FAUT:add_button("Unlock Oppressor MKII Trade Price", function()
 	stats.set_masked_int(MPX() .. "BUSINESSBATPSTAT_INT379", 5, 5, 5) --Pegassi Oppressor Mk II (Trade Price)
 end)
 
@@ -4537,19 +4373,19 @@ Text("Notifications Will Stop")
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CSYON6 = CSYON:add_tab("Los Santos Car Meet Menu Unlocker")
+LSCMUnlockeRecoveryMenu = CSYON:add_tab("LSCM Unlocker Menu")
 
-CSYON6:add_button("Unlock All Rep Lvl 1000", function()
+LSCMUnlockeRecoveryMenu:add_button("Unlock All Rep Lvl 1000", function()
 	for i = 262145 + 30958, 262145 + 30987 do
 		globals.set_float(i, 100000)
 	end
 end)
 
-CSYON6:add_button("LSCM Prize Ride Unlock", function()
+LSCMUnlockeRecoveryMenu:add_button("LSCM Prize Ride Unlock", function()
 	stats.set_bool(MPX() .. "CARMEET_PV_CHLLGE_CMPLT", true)
 end)
 
-LSCMNote = CSYON6:add_tab("Read Me Tutorial")
+LSCMNote = LSCMUnlockeRecoveryMenu:add_tab("Read Me Tutorial")
 
 LSCMNote:add_text("Buy a membership, activate, sit in", function() end)
 LSCMNote:add_text("a test car and go to the track", function() end)
@@ -4562,11 +4398,15 @@ LSCMNote:add_text("before, all unlocks will be temporary only", function() end)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
---© 2024 CSYON's Official Discord Server. All Rights Reserved--
+--© 2023 CSYON's Official Discord Server. All Rights Reserved--
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CSYON7 = CSYON:add_tab("Csyon's Money Method Menu")
+CSYON7 = CSYON:add_tab("Ultimate Money Methods Menu")
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CeoManagerMenu = CSYON7:add_tab("Ceo Manager Menu")
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -4598,9 +4438,16 @@ local am = "am_mp_warehouse"
 local am2 = "am_mp_peds"
 
 cratevalue = 0
-checkbox = CSYON7:add_checkbox("Start Ceo Manager")
+CeoManagerMenu:add_imgui(function()
+	cratevalue, used = ImGui.DragInt("Crate Value", cratevalue, 10000, 0, 6000000)
+	if used then
+		globals.set_int(CEO1, cratevalue)
+	end
+end)
 
-PRPGD = CSYON7:add_checkbox("Disable Player RP Gain")
+checkbox = CeoManagerMenu:add_checkbox("Start Ceo Manager")
+
+PRPGD = CeoManagerMenu:add_checkbox("Disable Player RP Gain")
 script.register_looped("PlayerRPGainDisabler", function(script)
 	script:yield()
 	if PRPGD:is_enabled() then
@@ -4610,7 +4457,7 @@ script.register_looped("PlayerRPGainDisabler", function(script)
 	end
 end)
 
-CSYON7:add_button("Open Warehouse Screen", function()
+CeoManagerMenu:add_button("Open Warehouse Screen", function()
 	SCRIPT.REQUEST_SCRIPT("apparcadebusinesshub")
 	SYSTEM.START_NEW_SCRIPT("apparcadebusinesshub", 8344)
 end)
@@ -5058,671 +4905,18 @@ gun_van_tab:add_imgui(function()
 	end
 end)
 
-
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-MOHA = CSYON7:add_tab("Money & RP Drops By MOHA")
 
-Me = MOHA:add_tab("Money & RP Drop 1.68 (Detected / Risky)")
-
-Me:add_button("Drop Money & RP (Princess Robot Bubblegum)", function()
-	script.run_in_fiber(function(script)
-		local model = joaat("vw_prop_vw_colle_prbubble")
-		local pickup = joaat("PICKUP_CUSTOM_SCRIPT")
-		local player_id = PLAYER.PLAYER_ID()
-		local money_value = 0
-		STREAMING.REQUEST_MODEL(model)
-		while STREAMING.HAS_MODEL_LOADED(model) == false do
-			script:yield()
-		end
-		if STREAMING.HAS_MODEL_LOADED(model) then
-			local coords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(player_id), true)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				money_value,
-				model,
-				true,
-				false
-			)
-			local net_id = NETWORK.OBJ_TO_NET(objectIdSpawned)
-			NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(objectIdSpawned, true)
-		end
-	end)
-end)
-
-Me:add_button("Drop Money & RP (Alien)", function()
-	script.run_in_fiber(function(script)
-		local model = joaat("vw_prop_vw_colle_alien")
-		local pickup = joaat("PICKUP_CUSTOM_SCRIPT")
-		local player_id = PLAYER.PLAYER_ID()
-		local money_value = 0
-		STREAMING.REQUEST_MODEL(model)
-		while STREAMING.HAS_MODEL_LOADED(model) == false do
-			script:yield()
-		end
-		if STREAMING.HAS_MODEL_LOADED(model) then
-			local coords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(player_id), true)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				money_value,
-				model,
-				true,
-				false
-			)
-			local net_id = NETWORK.OBJ_TO_NET(objectIdSpawned)
-			NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(objectIdSpawned, true)
-		end
-	end)
-end)
-
-Me:add_button("Drop Money & RP (Monkey)", function()
-	script.run_in_fiber(function(script)
-		local model = joaat("vw_prop_vw_colle_pogo")
-		local pickup = joaat("PICKUP_CUSTOM_SCRIPT")
-		local player_id = PLAYER.PLAYER_ID()
-		local money_value = 0
-		STREAMING.REQUEST_MODEL(model)
-		while STREAMING.HAS_MODEL_LOADED(model) == false do
-			script:yield()
-		end
-		if STREAMING.HAS_MODEL_LOADED(model) then
-			local coords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(player_id), true)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				money_value,
-				model,
-				true,
-				false
-			)
-			local net_id = NETWORK.OBJ_TO_NET(objectIdSpawned)
-			NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(objectIdSpawned, true)
-		end
-	end)
-end)
-
-Me:add_button("Drop Money & RP (Republican Space Ranger)", function()
-	script.run_in_fiber(function(script)
-		local model = joaat("vw_prop_vw_colle_rsrcomm")
-		local pickup = joaat("PICKUP_CUSTOM_SCRIPT")
-		local player_id = PLAYER.PLAYER_ID()
-		local money_value = 0
-		STREAMING.REQUEST_MODEL(model)
-		while STREAMING.HAS_MODEL_LOADED(model) == false do
-			script:yield()
-		end
-		if STREAMING.HAS_MODEL_LOADED(model) then
-			local coords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(player_id), true)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				money_value,
-				model,
-				true,
-				false
-			)
-			local net_id = NETWORK.OBJ_TO_NET(objectIdSpawned)
-			NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(objectIdSpawned, true)
-		end
-	end)
-end)
-
-Me:add_button("Drop Money & RP (Alternative Space Ranger)", function()
-	script.run_in_fiber(function(script)
-		local model = joaat("vw_prop_vw_colle_rsrgeneric")
-		local pickup = joaat("PICKUP_CUSTOM_SCRIPT")
-		local player_id = PLAYER.PLAYER_ID()
-		local money_value = 0
-		STREAMING.REQUEST_MODEL(model)
-		while STREAMING.HAS_MODEL_LOADED(model) == false do
-			script:yield()
-		end
-		if STREAMING.HAS_MODEL_LOADED(model) then
-			local coords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(player_id), true)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				money_value,
-				model,
-				true,
-				false
-			)
-			local net_id = NETWORK.OBJ_TO_NET(objectIdSpawned)
-			NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(objectIdSpawned, true)
-		end
-	end)
-end)
-
-Me:add_button("Drop Money & RP (Bigfoot)", function()
-	script.run_in_fiber(function(script)
-		local model = joaat("vw_prop_vw_colle_sasquatch")
-		local pickup = joaat("PICKUP_CUSTOM_SCRIPT")
-		local player_id = PLAYER.PLAYER_ID()
-		local money_value = 0
-		STREAMING.REQUEST_MODEL(model)
-		while STREAMING.HAS_MODEL_LOADED(model) == false do
-			script:yield()
-		end
-		if STREAMING.HAS_MODEL_LOADED(model) then
-			local coords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(player_id), true)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				money_value,
-				model,
-				true,
-				false
-			)
-			local net_id = NETWORK.OBJ_TO_NET(objectIdSpawned)
-			NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(objectIdSpawned, true)
-		end
-	end)
-end)
-
-Me:add_button("Drop Money & RP (The beast)", function()
-	script.run_in_fiber(function(script)
-		local model = joaat("vw_prop_vw_colle_beast")
-		local pickup = joaat("PICKUP_CUSTOM_SCRIPT")
-		local player_id = PLAYER.PLAYER_ID()
-		local money_value = 0
-		STREAMING.REQUEST_MODEL(model)
-		while STREAMING.HAS_MODEL_LOADED(model) == false do
-			script:yield()
-		end
-		if STREAMING.HAS_MODEL_LOADED(model) then
-			local coords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(player_id), true)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				money_value,
-				model,
-				true,
-				false
-			)
-			local net_id = NETWORK.OBJ_TO_NET(objectIdSpawned)
-			NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(objectIdSpawned, true)
-		end
-	end)
-end)
-
-Me:add_button("Drop Money & RP (Impotent Rage)", function()
-	script.run_in_fiber(function(script)
-		local model = joaat("vw_prop_vw_colle_imporage")
-		local pickup = joaat("PICKUP_CUSTOM_SCRIPT")
-		local player_id = PLAYER.PLAYER_ID()
-		local money_value = 0
-		STREAMING.REQUEST_MODEL(model)
-		while STREAMING.HAS_MODEL_LOADED(model) == false do
-			script:yield()
-		end
-		if STREAMING.HAS_MODEL_LOADED(model) then
-			local coords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(player_id), true)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				money_value,
-				model,
-				true,
-				false
-			)
-			local net_id = NETWORK.OBJ_TO_NET(objectIdSpawned)
-			NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(objectIdSpawned, true)
-		end
-	end)
-end)
-
-Me:add_button("Fake Money Drop 1 (Princess Robot Plush)", function()
-	script.run_in_fiber(function(script)
-		local model = joaat("ch_prop_princess_robo_plush_07a")
-		local pickup = joaat("PICKUP_CUSTOM_SCRIPT")
-		local player_id = PLAYER.PLAYER_ID()
-		local money_value = 0
-		STREAMING.REQUEST_MODEL(model)
-		while STREAMING.HAS_MODEL_LOADED(model) == false do
-			script:yield()
-		end
-		if STREAMING.HAS_MODEL_LOADED(model) then
-			local coords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(player_id), true)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 1,
-				coords.y + 1,
-				coords.z + 2,
-				0,
-				money_value,
-				model,
-				true,
-				false
-			)
-			local net_id = NETWORK.OBJ_TO_NET(objectIdSpawned)
-			NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(objectIdSpawned, true)
-		end
-	end)
-end)
-
-Me:add_button("Fake Money Drop 2 (Big Cash Pile)", function()
-	script.run_in_fiber(function(script)
-		local model = joaat("ch_prop_ch_cashtrolley_01a")
-		local pickup = joaat("PICKUP_CUSTOM_SCRIPT")
-		local player_id = PLAYER.PLAYER_ID()
-		local money_value = 0
-		STREAMING.REQUEST_MODEL(model)
-		while STREAMING.HAS_MODEL_LOADED(model) == false do
-			script:yield()
-		end
-		if STREAMING.HAS_MODEL_LOADED(model) then
-			local coords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(player_id), true)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				money_value,
-				model,
-				true,
-				false
-			)
-			local net_id = NETWORK.OBJ_TO_NET(objectIdSpawned)
-			NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(objectIdSpawned, true)
-		end
-	end)
-end)
-
-Me:add_button("Fake Gun Drop 3 (Broken Colt)", function()
-	script.run_in_fiber(function(script)
-		local model = joaat("w_pi_wep2_gun")
-		local pickup = joaat("PICKUP_CUSTOM_SCRIPT")
-		local player_id = PLAYER.PLAYER_ID()
-		local money_value = 0
-		STREAMING.REQUEST_MODEL(model)
-		while STREAMING.HAS_MODEL_LOADED(model) == false do
-			script:yield()
-		end
-		if STREAMING.HAS_MODEL_LOADED(model) then
-			local coords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(player_id), true)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				money_value,
-				model,
-				true,
-				false
-			)
-			local net_id = NETWORK.OBJ_TO_NET(objectIdSpawned)
-			NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(objectIdSpawned, true)
-		end
-	end)
-end)
-
-Me:add_button("Drop Casino Playing Cards", function()
-	script.run_in_fiber(function(script)
-		local model = joaat("vw_prop_vw_lux_card_01a")
-		local pickup = joaat("PICKUP_CUSTOM_SCRIPT")
-		local player_id = PLAYER.PLAYER_ID()
-		local money_value = 0
-		STREAMING.REQUEST_MODEL(model)
-		while STREAMING.HAS_MODEL_LOADED(model) == false do
-			script:yield()
-		end
-		if STREAMING.HAS_MODEL_LOADED(model) then
-			local coords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(player_id), true)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				money_value,
-				model,
-				true,
-				false
-			)
-			local net_id = NETWORK.OBJ_TO_NET(objectIdSpawned)
-			NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(objectIdSpawned, true)
-		end
-	end)
-end)
-
-Me:add_button("Drop 25k$ and RP (Work just one time)", function()
-	script.run_in_fiber(function(script)
-		local model = joaat("tr_prop_tr_chest_01a")
-		local pickup = joaat("PICKUP_CUSTOM_SCRIPT")
-		local player_id = PLAYER.PLAYER_ID()
-		local money_value = 0
-		STREAMING.REQUEST_MODEL(model)
-		while STREAMING.HAS_MODEL_LOADED(model) == false do
-			script:yield()
-		end
-		if STREAMING.HAS_MODEL_LOADED(model) then
-			local coords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(player_id), true)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				money_value,
-				model,
-				true,
-				false
-			)
-			local net_id = NETWORK.OBJ_TO_NET(objectIdSpawned)
-			NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(objectIdSpawned, true)
-		end
-	end)
-end)
-
-Me:add_button("Drop 4 USB Stick (Work just one time)", function()
-	script.run_in_fiber(function(script)
-		local model = joaat("tr_prop_tr_usb_drive_02a")
-		local pickup = joaat("PICKUP_CUSTOM_SCRIPT")
-		local player_id = PLAYER.PLAYER_ID()
-		local value1 = 0
-		local value2 = 1
-		local value3 = 2
-		local value4 = 3
-		STREAMING.REQUEST_MODEL(model)
-		while STREAMING.HAS_MODEL_LOADED(model) == false do
-			script:yield()
-		end
-		if STREAMING.HAS_MODEL_LOADED(model) then
-			local coords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(player_id), true)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				value1,
-				model,
-				true,
-				false
-			)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				value2,
-				model,
-				true,
-				false
-			)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				value3,
-				model,
-				true,
-				false
-			)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				value4,
-				model,
-				true,
-				false
-			)
-			local net_id = NETWORK.OBJ_TO_NET(objectIdSpawned)
-			NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(objectIdSpawned, true)
-		end
-	end)
-end)
-
-Me:add_button("Drop Box 10k$ and RP (Work just one time)", function()
-	script.run_in_fiber(function(script)
-		local model = joaat("h4_prop_h4_box_ammo_02a")
-		local pickup = joaat("PICKUP_CUSTOM_SCRIPT")
-		local player_id = PLAYER.PLAYER_ID()
-		local value1 = 0
-		local value2 = 1
-		local value3 = 2
-		local value4 = 3
-		local value5 = 4
-		local value6 = 5
-		local value7 = 6
-		local value8 = 7
-		local value9 = 8
-		local value10 = 9
-		STREAMING.REQUEST_MODEL(model)
-		while STREAMING.HAS_MODEL_LOADED(model) == false do
-			script:yield()
-		end
-		if STREAMING.HAS_MODEL_LOADED(model) then
-			local coords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(player_id), true)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				value1,
-				model,
-				true,
-				false
-			)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				value2,
-				model,
-				true,
-				false
-			)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				value3,
-				model,
-				true,
-				false
-			)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				value4,
-				model,
-				true,
-				false
-			)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				value5,
-				model,
-				true,
-				false
-			)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				value6,
-				model,
-				true,
-				false
-			)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				value7,
-				model,
-				true,
-				false
-			)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				value8,
-				model,
-				true,
-				false
-			)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				value9,
-				model,
-				true,
-				false
-			)
-			local objectIdSpawned = OBJECT.CREATE_AMBIENT_PICKUP(
-				pickup,
-				coords.x + 2,
-				coords.y + 1,
-				coords.z,
-				0,
-				value10,
-				model,
-				true,
-				false
-			)
-			local net_id = NETWORK.OBJ_TO_NET(objectIdSpawned)
-			NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(objectIdSpawned, true)
-		end
-	end)
-end)
-
-Me:add_button("Spawn UFO", function()
-	script.run_in_fiber(function(script)
-		local model = joaat("sum_prop_dufocore_01a")
-		local pickup = joaat("PICKUP_CUSTOM_SCRIPT")
-		local player_id = PLAYER.PLAYER_ID()
-		local money_value = 0
-		STREAMING.REQUEST_MODEL(model)
-		while STREAMING.HAS_MODEL_LOADED(model) == false do
-			script:yield()
-		end
-		if STREAMING.HAS_MODEL_LOADED(model) then
-			local coords = ENTITY.GET_ENTITY_COORDS(PLAYER.GET_PLAYER_PED_SCRIPT_INDEX(player_id), true)
-			local objectIdSpawned = OBJECT.CREATE_OBJECT(model, coords.x + 2, coords.y + 2, coords.z, true, true, true)
-			local net_id = NETWORK.OBJ_TO_NET(objectIdSpawned)
-			NETWORK.SET_NETWORK_ID_EXISTS_ON_ALL_MACHINES(objectIdSpawned, true)
-		end
-	end)
-end)
-
-Me:add_text("⚠️ Informations ⚠️")
-Me:add_text("Money & RP Drops By MOHA V1.0 for YimMenu.")
-Me:add_text("")
-Me:add_text("⚠️Information: Some people may not receive the Money and RP")
-Me:add_text("because they have protections.")
-Me:add_text("⚠️Information: If a player receives too many figures,")
-Me:add_text("it is possible after a certain time that he no longer")
-Me:add_text("receives money but only RP, he must try to restart the game or wait.")
-Me:add_text("⚠️Information: If you give too much to one or more players,")
-Me:add_text("after a while they may get a black transaction error screen.")
-Me:add_text("⚠️Information: Don't be a spectator of a player when you drop.")
-Me:add_text("You must be present!")
-Me:add_text("⚠️Information: Don't stop the world time!")
-Me:add_text("⚠️Warning!⚠️")
-Me:add_text("Don't abuse!")
-Me:add_text("Don't give to people who don't ask you!")
-Me:add_text("Don't remove credits to steal script code!")
-Me:add_text(" Credits")
-Me:add_text("Thanks gir489 for help! Thanks Yim community!")
-Me:add_text("Thanks Kiddions Modest Menu Community!")
-Me:add_text("Join Kiddions Modest Menu Discord For All Updates")
-Me:add_text("Credits: MOHA, gir489, L7NEG")
+WareHouseDataEditorMenu = CeoManagerMenu:add_tab("WareHouse Data Editor")
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CSYON7:add_checkbox("Enable Nitghtclub $250k/15s (Safe AFK)")
-script.register_looped("nightclubloop", function(script)
-	script:yield()
-	if checkbox:is_enabled() == true then
-		log.info("Starting")
-		STATS.STAT_SET_INT(joaat(MPX .. "CLUB_POPULARITY"), 1000, true)
-		STATS.STAT_SET_INT(joaat(MPX .. "CLUB_PAY_TIME_LEFT"), -1, true)
-		log.info("Finished")
-		script:sleep(2500)
-	end
-end)
-
-CSYON7:add_checkbox("Enable Nitghtclub $300k/15s (Safe AFK)")
-script.register_looped("nightclubloop", function(script)
-	script:yield()
-	if checkbox:is_enabled() == true then
-		log.info("Starting")
-		STATS.STAT_SET_INT(joaat(MPX .. "CLUB_POPULARITY"), 1000, true)
-		STATS.STAT_SET_INT(joaat(MPX .. "CLUB_PAY_TIME_LEFT"), -1, true)
-		log.info("Finished")
-		script:sleep(3000)
-	end
-end)
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-CSYON8 = CSYON7:add_tab("WareHouse Editor")
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-CSYON8:add_button("Auto-Reset stats-0/0Sales", function()
-	STATS.STAT_SET_INT(joaat(MPX .. "LIFETIME_BUY_COMPLETE"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "LIFETIME_BUY_UNDERTAKEN"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "LIFETIME_SELL_COMPLETE"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "LIFETIME_SELL_UNDERTAKEN"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "LIFETIME_CONTRA_EARNINGS"), 0, true)
+WareHouseDataEditorMenu:add_button("Reset Crate Sell Stats-0/0 Sales", function()
+	stats.set_int(MPX() .. "LIFETIME_BUY_COMPLETE", 0)
+	stats.set_int(MPX() .. "LIFETIME_BUY_UNDERTAKEN", 0)
+	stats.set_int(MPX() .. "LIFETIME_SELL_COMPLETE", 0)
+	stats.set_int(MPX() .. "LIFETIME_SELL_UNDERTAKEN", 0)
+	stats.set_int(MPX() .. "LIFETIME_CONTRA_EARNINGS", 0)
 	globals.set_int(1575035, 11) ----PlayerSessionBlank--------
 	globals.set_int(1574589, 1) ----PlayerSessionNew----------
 	sleep(2)
@@ -5731,65 +4925,58 @@ end)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CSYON7N = CSYON7:add_tab("Tutorial ReadMe")
+NightClubSafeMenu = CSYON7:add_tab("NightClub Safe Loop Menu")
 
-CSYON7N:add_text("     Ceo Crates Method       ", function() end)
-CSYON7N:add_text("   First Enter Your Warehouse   ", function() end)
-CSYON7N:add_text(
-	"   Then Stand In Front Of Your Warehouse Computer And Then Active The Enable Ceo Manager    ",
-	function() end
-)
-CSYON7N:add_text("", function() end)
-CSYON7N:add_text("https://discord.gg/Rfu3Z8Svup", function() end)
-
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-CSYONH = CSYON:add_tab("Heists Editor")
-
---Required Stats----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-MPX = PI
-PI = stats.get_int("MPPLY_LAST_MP_CHAR")
-if PI == 0 then
-	MPX = "MP0_"
-else
-	MPX = "MP1_"
-end
+NCSCB = NightClubSafeMenu:add_checkbox("Enable Nitghtclub $250k/15s (Safe AFK)")
+script.register_looped("nightclubloop", function(script)
+	script:yield()
+	if NCSCB:is_enabled() == true then
+		stats.set_int(MPX() .. "CLUB_POPULARITY", 1000)
+		stats.set_int(MPX() .. "CLUB_PAY_TIME_LEFT", -1)
+		script:sleep(2500)
+	end
+end)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CSYONAPARTMENT = CSYONH:add_tab("Apartment Editor")
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CSYONAPARTMENT:add_button("Skip Current Apartment Heist Preps", function()
+HeistsDataEditorMenu = CSYON:add_tab("Heists Data Editor Menu")
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ApartmentDataEditorMenu = HeistsDataEditorMenu:add_tab("Apartment Data Editor Menu")
+
+ApartmentDataEditorMenu:add_button("Skip Current Apartment Heist Preps", function()
 	stats.set_int(MPX() .. "HEIST_PLANNING_STAGE", -1)
 end)
 
-CSYONAPARTMENT:add_sameline()
+ApartmentDataEditorMenu:add_sameline()
 
-CSYONAPARTMENT:add_button("Reset Current Apartment Heist Preps", function()
+ApartmentDataEditorMenu:add_button("Reset Current Apartment Heist Preps", function()
 	stats.set_int(MPX() .. "HEIST_PLANNING_STAGE", 0)
 end)
 
-CSYONAPARTMENT:add_text("")
-CSYONAPARTMENT:add_text("For Fleeca:")
-CSYONAPARTMENT:add_text(
+ApartmentDataEditorMenu:add_text("")
+ApartmentDataEditorMenu:add_text("For Fleeca:")
+ApartmentDataEditorMenu:add_text(
 	'Pay for the preparation, start the first mission and as soon as you are sent to scout\nchange the session, come back to planning room, press "Complete Preps" near white board and press "E"'
 )
-CSYONAPARTMENT:add_text("For Other Heist:")
-CSYONAPARTMENT:add_text(
+ApartmentDataEditorMenu:add_text("For Other Heist:")
+ApartmentDataEditorMenu:add_text(
 	'Start the mission and leave after the 1st cutscene ends, press "Complete Preps" near white board and press "E"'
 )
 
-CSYONAPARTMENT:add_separator()
-CSYONAPARTMENT:add_text("Cuts to All")
-CSYONAPARTMENT:add_text("Fleeca Job Heist:")
-CSYONAPARTMENT:add_button("100", function()
+ApartmentDataEditorMenu:add_separator()
+ApartmentDataEditorMenu:add_text("Cuts to All")
+ApartmentDataEditorMenu:add_text("Fleeca Job Heist:")
+ApartmentDataEditorMenu:add_button("100", function()
 	globals.set_int(ACg1, -200)
 	globals.set_int(ACg2, 100)
 end)
-CSYONAPARTMENT:add_text("")
-CSYONAPARTMENT:add_text("Other Heists:")
-CSYONAPARTMENT:add_button("100", function()
+ApartmentDataEditorMenu:add_text("")
+ApartmentDataEditorMenu:add_text("Other Heists:")
+ApartmentDataEditorMenu:add_button("100", function()
 	globals.set_int(ACg1, -300)
 	globals.set_int(ACg2, 100)
 	globals.set_int(ACg3, 100)
@@ -5800,7 +4987,7 @@ local apartCut1 = 0
 local apartCut2 = 0
 local apartCut3 = 0
 local apartCut4 = 0
-CSYONAPARTMENT:add_imgui(function()
+ApartmentDataEditorMenu:add_imgui(function()
 	ImGui.Text("Custom Cuts:")
 	ImGui.SetNextItemWidth(150)
 	apartCut1 = ImGui.InputInt("Cut 1", apartCut1)
@@ -5828,17 +5015,17 @@ CSYONAPARTMENT:add_imgui(function()
 		globals.set_int(ACg5, -1 * (-100 + globals.get_int(ACg1)) / 2)
 	end
 end)
-CSYONAPARTMENT:add_separator()
-CSYONAPARTMENT:add_text("Extras")
-CSYONAPARTMENT:add_button("Bypass Fleeca Hack", function()
+ApartmentDataEditorMenu:add_separator()
+ApartmentDataEditorMenu:add_text("Extras")
+ApartmentDataEditorMenu:add_button("Bypass Fleeca Hack", function()
 	locals.set_int(FMC, AFHl, 7)
 end)
-CSYONAPARTMENT:add_sameline()
-CSYONAPARTMENT:add_button("Bypass Fleeca Drill", function()
+ApartmentDataEditorMenu:add_sameline()
+ApartmentDataEditorMenu:add_button("Bypass Fleeca Drill", function()
 	locals.set_float(FMC, AFDl, 100)
 end)
-CSYONAPARTMENT:add_sameline()
-CSYONAPARTMENT:add_button("Unlock All Jobs", function()
+ApartmentDataEditorMenu:add_sameline()
+ApartmentDataEditorMenu:add_button("Unlock All Jobs", function()
 	stats.set_int(MPX() .. "HEIST_SAVED_STRAND_0", globals.get_int(AUAJg1))
 	stats.set_int(MPX() .. "HEIST_SAVED_STRAND_0_L", 5)
 	stats.set_int(MPX() .. "HEIST_SAVED_STRAND_1", globals.get_int(AUAJg2))
@@ -5850,23 +5037,23 @@ CSYONAPARTMENT:add_button("Unlock All Jobs", function()
 	stats.set_int(MPX() .. "HEIST_SAVED_STRAND_4", globals.get_int(AUAJg5))
 	stats.set_int(MPX() .. "HEIST_SAVED_STRAND_4_L", 5)
 end)
-CSYONAPARTMENT:add_sameline()
-CSYONAPARTMENT:add_button("Instant Finish", function()
+ApartmentDataEditorMenu:add_sameline()
+ApartmentDataEditorMenu:add_button("Instant Finish", function()
 	locals.set_int(FMC, AIFl3, 12)
 	locals.set_int(FMC, AIFl4, 99999)
 	locals.set_int(FMC, AIFl5, 99999)
 end)
-CSYONAPARTMENT:add_text("Note: After Clicking Unlock All jobs, restart the game")
+ApartmentDataEditorMenu:add_text("Note: After Clicking Unlock All jobs, restart the game")
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CSYONCASINO = CSYONH:add_tab("Casino Heist")
+CasinoHeistEditorMenu = HeistsDataEditorMenu:add_tab("Casino Heist")
 
 fm_mission_controller_cart_grab = 10255
 fm_mission_controller_cart_grab_speed = 14
 fm_mission_controller_cart_autograb = false
 
-CSYONCASINO:add_button("One Click Setup Casino Silent&Sneaky", function()
+CasinoHeistEditorMenu:add_button("One Click Setup Casino Silent&Sneaky", function()
 	stats.set_int(MPX() .. "H3OPT_APPROACH", 1)
 	stats.set_int(MPX() .. "H3_LAST_APPROACH", 3)
 	stats.set_int(MPX() .. "H3OPT_TARGET", 3)
@@ -5882,7 +5069,7 @@ CSYONCASINO:add_button("One Click Setup Casino Silent&Sneaky", function()
 	stats.set_int(MPX() .. "H3OPT_MASKS", 2)
 end)
 
-CSYONCASINO:add_button("One Click Setup Casino The Big Con. Mode", function()
+CasinoHeistEditorMenu:add_button("One Click Setup Casino The Big Con. Mode", function()
 	stats.set_int(MPX() .. "H3OPT_APPROACH", 2)
 	stats.set_int(MPX() .. "H3_LAST_APPROACH", 3)
 	stats.set_int(MPX() .. "H3OPT_TARGET", 3)
@@ -5898,7 +5085,7 @@ CSYONCASINO:add_button("One Click Setup Casino The Big Con. Mode", function()
 	stats.set_int(MPX() .. "H3OPT_MASKS", 2)
 end)
 
-CSYONCASINO:add_button("One Click Setup Casino Agrresive Mode", function()
+CasinoHeistEditorMenu:add_button("One Click Setup Casino Agrresive Mode", function()
 	stats.set_int(MPX() .. "H3OPT_APPROACH", 3)
 	stats.set_int(MPX() .. "H3_LAST_APPROACH", 1)
 	stats.set_int(MPX() .. "H3OPT_TARGET", 3)
@@ -5914,8 +5101,8 @@ CSYONCASINO:add_button("One Click Setup Casino Agrresive Mode", function()
 	stats.set_int(MPX() .. "H3OPT_MASKS", 2)
 end)
 
-CSYONCASINO:add_text("Preps")
-CSYONCASINO:add_text("")
+CasinoHeistEditorMenu:add_text("Preps")
+CasinoHeistEditorMenu:add_text("")
 local function CasinoApproachSetter(last_approach, hard_approach, approach, selected_approach)
 	stats.set_int(MPX() .. "H3_LAST_APPROACH", last_approach)
 	stats.set_int(MPX() .. "H3_HARD_APPROACH", hard_approach)
@@ -5929,43 +5116,43 @@ local function CasinoCompletePreps()
 	stats.set_int(MPX() .. "H3OPT_BITSET1", -1)
 	stats.set_int(MPX() .. "H3OPT_COMPLETEDPOSIX", -1)
 end
-CSYONCASINO:add_text("Primary Target")
-CSYONCASINO:add_button("Diamond", function()
+CasinoHeistEditorMenu:add_text("Primary Target")
+CasinoHeistEditorMenu:add_button("Diamond", function()
 	stats.set_int(MPX() .. "H3OPT_TARGET", 3)
 end)
-CSYONCASINO:add_sameline()
-CSYONCASINO:add_button("Gold", function()
+CasinoHeistEditorMenu:add_sameline()
+CasinoHeistEditorMenu:add_button("Gold", function()
 	stats.set_int(MPX() .. "H3OPT_TARGET", 1)
 end)
-CSYONCASINO:add_sameline()
-CSYONCASINO:add_button("Arts", function()
+CasinoHeistEditorMenu:add_sameline()
+CasinoHeistEditorMenu:add_button("Arts", function()
 	stats.set_int(MPX() .. "H3OPT_TARGET", 2)
 end)
-CSYONCASINO:add_sameline()
-CSYONCASINO:add_button("Cash", function()
+CasinoHeistEditorMenu:add_sameline()
+CasinoHeistEditorMenu:add_button("Cash", function()
 	stats.set_int(MPX() .. "H3OPT_TARGET", 0)
 end)
-CSYONCASINO:add_separator()
-CSYONCASINO:add_text("Select Apprach")
-CSYONCASINO:add_button("Silent & Sneaky", function()
+CasinoHeistEditorMenu:add_separator()
+CasinoHeistEditorMenu:add_text("Select Apprach")
+CasinoHeistEditorMenu:add_button("Silent & Sneaky", function()
 	CasinoApproachSetter(2, 1, 3, 1)
 	STATS.STAT_SET_INT(MPX() .. "H3OPT_BITSET1", 127)
 	stats.set_int(MPX() .. "H3OPT_WEAPS", 0)
 end)
-CSYONCASINO:add_sameline()
-CSYONCASINO:add_button("Big Con", function()
+CasinoHeistEditorMenu:add_sameline()
+CasinoHeistEditorMenu:add_button("Big Con", function()
 	CasinoApproachSetter(1, 2, 3, 2)
 	STATS.STAT_SET_INT(MPX() .. "H3OPT_BITSET1", 799)
 	stats.set_int(MPX() .. "H3OPT_WEAPS", 0)
 end)
-CSYONCASINO:add_sameline()
-CSYONCASINO:add_button("Aggressive", function()
+CasinoHeistEditorMenu:add_sameline()
+CasinoHeistEditorMenu:add_button("Aggressive", function()
 	CasinoApproachSetter(2, 3, 1, 3)
 	STATS.STAT_SET_INT(MPX() .. "H3OPT_BITSET1", 799)
 	stats.set_int(MPX() .. "H3OPT_WEAPS", 0)
 end)
-CSYONCASINO:add_separator()
-CSYONCASINO:add_text("Gun Man")
+CasinoHeistEditorMenu:add_separator()
+CasinoHeistEditorMenu:add_text("Gun Man")
 local gunman = 0
 local driver = 0
 local hacker = 0
@@ -6055,7 +5242,7 @@ local maskLoad = {
 	"Oni Full Mask Set",
 	"Hockey Set",
 }
-CSYONCASINO:add_imgui(function()
+CasinoHeistEditorMenu:add_imgui(function()
 	if stats.get_int(MPX() .. "H3OPT_APPROACH") == 1 then
 		ImGui.SetNextItemWidth(265)
 		gunman = ImGui.Combo("Loadout", gunman, GunManLoadoutSi, 10)
@@ -6147,20 +5334,20 @@ CSYONCASINO:add_imgui(function()
 		globals.set_int(DCCg4, casinoPc4)
 	end
 end)
-CSYONCASINO:add_separator()
-CSYONCASINO:add_button("Reload Planning Screen", function()
+CasinoHeistEditorMenu:add_separator()
+CasinoHeistEditorMenu:add_button("Reload Planning Screen", function()
 	locals.set_int("gb_casino_heist_planning", DCRBl, 2)
 end)
 
-CSYONCASINO:add_separator()
-CSYONCASINO:add_text("Instant Heist Passed")
-CSYONCASINO:add_button("Instant Finish $$", function()
+CasinoHeistEditorMenu:add_separator()
+CasinoHeistEditorMenu:add_text("Instant Heist Passed")
+CasinoHeistEditorMenu:add_button("Instant Finish $$", function()
 	locals.set_int(FMC2020, 50150, 9)
 	locals.set_int(FMC2020, 50150 + 1770 + 1, 50)
 	gui.show_message("Instant Heist Passed", "Activated")
 end)
 
-local CasinoHeistExtra = CSYONCASINO:add_tab("Extras")
+local CasinoHeistExtra = CasinoHeistEditorMenu:add_tab("Extras")
 CasinoHeistExtra:add_text("Make Lester, Driver, Hacker, and Gunman cut to 0%")
 CasinoHeistExtra:add_button("Make Fees to 0", function()
 	globals.set_int(DCCgun, 0)
@@ -6186,70 +5373,73 @@ CasinoHeistExtra:add_button("Bypass Drill Vault Door", function()
 end)
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Updated by DeadlineEm, I used your modest menu version for ideas for this.
 
-CSYONCAYO = CSYONH:add_tab("Cayo Perlco Heist")
+-- Deleting enemies does not allow the keycards to drop, so teleport into the
+-- seondary buildings to grab the loot, you can open the door for others from
+-- the inside
+local CayoHeistEditorMenu = HeistsDataEditorMenu:add_tab("Cayo Perico Editor")
 
-CSYONCAYO:add_text("Cuts to All")
-CSYONCAYO:add_button("100", function()
+CayoHeistEditorMenu:add_text("Cuts to All")
+CayoHeistEditorMenu:add_button("100", function()
 	CutsPresetter(CPCg1, CPCg4, 100)
 end)
-
-CSYONCAYO:add_text("")
-CSYONCAYO:add_text("Custom Cut")
-local cayocut1 = CSYONCAYO:add_input_int("Cut 1")
-local cayocut2 = CSYONCAYO:add_input_int("Cut 2")
-local cayocut3 = CSYONCAYO:add_input_int("Cut 3")
-local cayocut4 = CSYONCAYO:add_input_int("Cut 4")
-CSYONCAYO:add_button("Set", function()
+CayoHeistEditorMenu:add_text("")
+CayoHeistEditorMenu:add_text("Custom Cut")
+local cayocut1 = CayoHeistEditorMenu:add_input_int("Cut 1")
+local cayocut2 = CayoHeistEditorMenu:add_input_int("Cut 2")
+local cayocut3 = CayoHeistEditorMenu:add_input_int("Cut 3")
+local cayocut4 = CayoHeistEditorMenu:add_input_int("Cut 4")
+CayoHeistEditorMenu:add_button("Set", function()
 	globals.set_int(CPCg1, cayocut1:get_value())
 	globals.set_int(CPCg2, cayocut2:get_value())
 	globals.set_int(CPCg3, cayocut3:get_value())
 	globals.set_int(CPCg4, cayocut4:get_value())
 end)
-CSYONCAYO:add_separator()
+CayoHeistEditorMenu:add_separator()
 
-CSYONCAYO:add_text("Setups")
+CayoHeistEditorMenu:add_text("Non-Legit Presets")
 
-CSYONCAYO:add_button("One Click Setup Panther + Hard Mode", function()
-	STATS.STAT_SET_INT(joaat(MPX .. "H4CNF_BS_GEN"), 131071, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4CNF_BS_ENTR"), 63, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4CNF_BS_ABIL"), 63, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4CNF_WEAPONS"), 5, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4CNF_WEP_DISRP"), 3, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4CNF_ARM_DISRP"), 3, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4CNF_HEL_DISRP"), 3, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4CNF_TARGET"), 5, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4CNF_TROJAN"), 2, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4CNF_APPROACH"), -1, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4LOOT_CASH_I"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4LOOT_CASH_C"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4LOOT_WEED_I"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4LOOT_WEED_C"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4LOOT_COKE_I"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4LOOT_COKE_C"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4LOOT_CASH_I"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4LOOT_GOLD_I"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4LOOT_GOLD_C"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4LOOT_PAINT"), -1, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4_PROGRESS"), 131055, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4LOOT_CASH_I_SCOPED"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4LOOT_CASH_C_SCOPED"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4LOOT_WEED_I_SCOPED"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4LOOT_WEED_C_SCOPED"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4LOOT_COKE_I_SCOPED"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4LOOT_COKE_C_SCOPED"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4LOOT_GOLD_I_SCOPED"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4LOOT_GOLD_C_SCOPED"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4LOOT_PAINT_SCOPED"), -1, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4_MISSIONS"), 65535, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "H4_PLAYTHROUGH_STATUS"), 32, true)
+CayoHeistEditorMenu:add_button("Panther/Gold (Hard)", function()
+	stats.set_int(MPX() .. "H4CNF_BS_GEN", 131071)
+	stats.set_int(MPX() .. "H4CNF_BS_ENTR", 63)
+	stats.set_int(MPX() .. "H4CNF_BS_ABIL", 63)
+	stats.set_int(MPX() .. "H4CNF_WEAPONS", 5)
+	stats.set_int(MPX() .. "H4CNF_WEP_DISRP", 3)
+	stats.set_int(MPX() .. "H4CNF_ARM_DISRP", 3)
+	stats.set_int(MPX() .. "H4CNF_HEL_DISRP", 3)
+	stats.set_int(MPX() .. "H4CNF_TARGET", 5)
+	stats.set_int(MPX() .. "H4CNF_TROJAN", 2)
+	stats.set_int(MPX() .. "H4CNF_APPROACH", -1)
+	stats.set_int(MPX() .. "H4LOOT_CASH_I", 0)
+	stats.set_int(MPX() .. "H4LOOT_CASH_C", 0)
+	stats.set_int(MPX() .. "H4LOOT_WEED_I", 0)
+	stats.set_int(MPX() .. "H4LOOT_WEED_C", 0)
+	stats.set_int(MPX() .. "H4LOOT_COKE_I", 0)
+	stats.set_int(MPX() .. "H4LOOT_COKE_C", 0)
+	stats.set_int(MPX() .. "H4LOOT_CASH_I", 0)
+	stats.set_int(MPX() .. "H4LOOT_GOLD_I", 0)
+	stats.set_int(MPX() .. "H4LOOT_GOLD_C", -1)
+	stats.set_int(MPX() .. "H4LOOT_PAINT", 0)
+	stats.set_int(MPX() .. "H4_PROGRESS", 131055)
+	stats.set_int(MPX() .. "H4LOOT_CASH_I_SCOPED", 0)
+	stats.set_int(MPX() .. "H4LOOT_CASH_C_SCOPED", 0)
+	stats.set_int(MPX() .. "H4LOOT_WEED_I_SCOPED", 0)
+	stats.set_int(MPX() .. "H4LOOT_WEED_C_SCOPED", 0)
+	stats.set_int(MPX() .. "H4LOOT_COKE_I_SCOPED", 0)
+	stats.set_int(MPX() .. "H4LOOT_COKE_C_SCOPED", 0)
+	stats.set_int(MPX() .. "H4LOOT_GOLD_I_SCOPED", 0)
+	stats.set_int(MPX() .. "H4LOOT_GOLD_C_SCOPED", -1)
+	stats.set_int(MPX() .. "H4LOOT_GOLD_V", 1191817)
+	stats.set_int(MPX() .. "H4LOOT_PAINT_SCOPED", 0)
+	stats.set_int(MPX() .. "H4_MISSIONS", 65535)
+	stats.set_int(MPX() .. "H4_PLAYTHROUGH_STATUS", 32)
 
 	gui.show_message("Cayo Heist", "Panther Hard Mode has been set up!")
 	gui.show_message("Cayo Heist", "Reset the board to see the changes")
 end)
-
-CSYONCAYO:add_sameline()
-CSYONCAYO:add_button("Diamond/Gold (Hard)", function()
+CayoHeistEditorMenu:add_sameline()
+CayoHeistEditorMenu:add_button("Diamond/Gold (Hard)", function()
 	stats.set_int(MPX() .. "H4CNF_BS_GEN", 131071)
 	stats.set_int(MPX() .. "H4CNF_BS_ENTR", 63)
 	stats.set_int(MPX() .. "H4CNF_BS_ABIL", 63)
@@ -6288,8 +5478,8 @@ CSYONCAYO:add_button("Diamond/Gold (Hard)", function()
 	gui.show_message("Cayo Heist", "Reset the board to see the changes")
 end)
 
-CSYONCAYO:add_sameline()
-CSYONCAYO:add_button("Bonds/Gold (Hard)", function()
+CayoHeistEditorMenu:add_sameline()
+CayoHeistEditorMenu:add_button("Bonds/Gold (Hard)", function()
 	stats.set_int(MPX() .. "H4CNF_BS_GEN", 131071)
 	stats.set_int(MPX() .. "H4CNF_BS_ENTR", 63)
 	stats.set_int(MPX() .. "H4CNF_BS_ABIL", 63)
@@ -6328,8 +5518,8 @@ CSYONCAYO:add_button("Bonds/Gold (Hard)", function()
 	gui.show_message("Cayo Heist", "Reset the board to see the changes")
 end)
 
-CSYONCAYO:add_sameline()
-CSYONCAYO:add_button("Necklace/Gold (Hard)", function()
+CayoHeistEditorMenu:add_sameline()
+CayoHeistEditorMenu:add_button("Necklace/Gold (Hard)", function()
 	stats.set_int(MPX() .. "H4CNF_BS_GEN", 131071)
 	stats.set_int(MPX() .. "H4CNF_BS_ENTR", 63)
 	stats.set_int(MPX() .. "H4CNF_BS_ABIL", 63)
@@ -6368,8 +5558,8 @@ CSYONCAYO:add_button("Necklace/Gold (Hard)", function()
 	gui.show_message("Cayo Heist", "Reset the board to see the changes")
 end)
 
-CSYONCAYO:add_sameline()
-CSYONCAYO:add_button("Tequila/Gold (Hard)", function()
+CayoHeistEditorMenu:add_sameline()
+CayoHeistEditorMenu:add_button("Tequila/Gold (Hard)", function()
 	stats.set_int(MPX() .. "H4CNF_BS_GEN", 131071)
 	stats.set_int(MPX() .. "H4CNF_BS_ENTR", 63)
 	stats.set_int(MPX() .. "H4CNF_BS_ABIL", 63)
@@ -6407,10 +5597,10 @@ CSYONCAYO:add_button("Tequila/Gold (Hard)", function()
 	gui.show_message("Cayo Heist", "Tequila Hard Mode has been set up!")
 	gui.show_message("Cayo Heist", "Reset the board to see the changes")
 end)
-CSYONCAYO:add_separator()
-CSYONCAYO:add_text("Legit Presets")
+CayoHeistEditorMenu:add_separator()
+CayoHeistEditorMenu:add_text("Legit Presets")
 
-CSYONCAYO:add_button("Panther/Gold (L. Hard)", function()
+CayoHeistEditorMenu:add_button("Panther/Gold (L. Hard)", function()
 	stats.set_int(MPX() .. "H4CNF_BS_GEN", 131071)
 	stats.set_int(MPX() .. "H4CNF_BS_ENTR", 63)
 	stats.set_int(MPX() .. "H4CNF_BS_ABIL", 63)
@@ -6457,9 +5647,9 @@ CSYONCAYO:add_button("Panther/Gold (L. Hard)", function()
 	gui.show_message("Cayo Heist", "Reset the board to see the changes")
 end)
 
-CSYONCAYO:add_sameline()
+CayoHeistEditorMenu:add_sameline()
 
-CSYONCAYO:add_button("Diamond/Gold (L. Hard)", function()
+CayoHeistEditorMenu:add_button("Diamond/Gold (L. Hard)", function()
 	stats.set_int(MPX() .. "H4CNF_BS_GEN", 131071)
 	stats.set_int(MPX() .. "H4CNF_BS_ENTR", 63)
 	stats.set_int(MPX() .. "H4CNF_BS_ABIL", 63)
@@ -6506,9 +5696,9 @@ CSYONCAYO:add_button("Diamond/Gold (L. Hard)", function()
 	gui.show_message("Cayo Heist", "Reset the board to see the changes")
 end)
 
-CSYONCAYO:add_sameline()
+CayoHeistEditorMenu:add_sameline()
 
-CSYONCAYO:add_button("Bonds/Gold (L. Hard)", function()
+CayoHeistEditorMenu:add_button("Bonds/Gold (L. Hard)", function()
 	stats.set_int(MPX() .. "H4CNF_BS_GEN", 131071)
 	stats.set_int(MPX() .. "H4CNF_BS_ENTR", 63)
 	stats.set_int(MPX() .. "H4CNF_BS_ABIL", 63)
@@ -6555,9 +5745,9 @@ CSYONCAYO:add_button("Bonds/Gold (L. Hard)", function()
 	gui.show_message("Cayo Heist", "Reset the board to see the changes")
 end)
 
-CSYONCAYO:add_sameline()
+CayoHeistEditorMenu:add_sameline()
 
-CSYONCAYO:add_button("Necklace/Gold (L. Hard)", function()
+CayoHeistEditorMenu:add_button("Necklace/Gold (L. Hard)", function()
 	stats.set_int(MPX() .. "H4CNF_BS_GEN", 131071)
 	stats.set_int(MPX() .. "H4CNF_BS_ENTR", 63)
 	stats.set_int(MPX() .. "H4CNF_BS_ABIL", 63)
@@ -6604,9 +5794,9 @@ CSYONCAYO:add_button("Necklace/Gold (L. Hard)", function()
 	gui.show_message("Cayo Heist", "Reset the board to see the changes")
 end)
 
-CSYONCAYO:add_sameline()
+CayoHeistEditorMenu:add_sameline()
 
-CSYONCAYO:add_button("Tequila/Gold (L. Hard)", function()
+CayoHeistEditorMenu:add_button("Tequila/Gold (L. Hard)", function()
 	stats.set_int(MPX() .. "H4CNF_BS_GEN", 131071)
 	stats.set_int(MPX() .. "H4CNF_BS_ENTR", 63)
 	stats.set_int(MPX() .. "H4CNF_BS_ABIL", 63)
@@ -6653,9 +5843,9 @@ CSYONCAYO:add_button("Tequila/Gold (L. Hard)", function()
 	gui.show_message("Cayo Heist", "Reset the board to see the changes")
 end)
 
-CSYONCAYO:add_separator()
-CSYONCAYO:add_text("Reset Presets Completely")
-CSYONCAYO:add_button("Reset Heist Completely", function()
+CayoHeistEditorMenu:add_separator()
+CayoHeistEditorMenu:add_text("Reset Presets Completely")
+CayoHeistEditorMenu:add_button("Reset Heist Completely", function()
 	stats.set_int(MPX() .. "H4_MISSIONS", 0)
 	stats.set_int(MPX() .. "H4_PROGRESS", 0)
 	stats.set_int(MPX() .. "H4_PLAYTHROUGH_STATUS", 0)
@@ -6664,36 +5854,36 @@ CSYONCAYO:add_button("Reset Heist Completely", function()
 	stats.set_int(MPX() .. "H4CNF_BS_GEN", 0)
 end)
 
-CSYONCAYO:add_separator()
-CSYONCAYO:add_text(
+CayoHeistEditorMenu:add_separator()
+CayoHeistEditorMenu:add_text(
 	"Press this after clicking one of the above presets or after the reset heist Completely Option"
 )
-CSYONCAYO:add_button("Reset Kosatka Board", function()
+CayoHeistEditorMenu:add_button("Reset Kosatka Board", function()
 	locals.set_int(HIP, 1546, 2)
 	gui.show_message("Cayo Heist", "Planning board has been reset!")
 end)
 
-CSYONCAYO:add_separator()
-CSYONCAYO:add_text("During Heist")
-CSYONCAYO:add_button("Skip Drainage Cut", function()
+CayoHeistEditorMenu:add_separator()
+CayoHeistEditorMenu:add_text("During Heist")
+CayoHeistEditorMenu:add_button("Skip Drainage Cut", function()
 	locals.set_int(FMC2020, CPSTCl, 6)
 	gui.show_message("Cayo Heist", "Bypassed Drainage Cut")
 end)
 
-CSYONCAYO:add_sameline()
-CSYONCAYO:add_button("Skip Fingerprint Scanner", function()
+CayoHeistEditorMenu:add_sameline()
+CayoHeistEditorMenu:add_button("Skip Fingerprint Scanner", function()
 	locals.set_int(FMC2020, CPFHl, 5)
 	gui.show_message("Cayo Heist", "Bypassed Fingerprint Scanner")
 end)
 
-CSYONCAYO:add_sameline()
-CSYONCAYO:add_button("Skip Glass Cut", function()
+CayoHeistEditorMenu:add_sameline()
+CayoHeistEditorMenu:add_button("Skip Glass Cut", function()
 	locals.set_float(FMC2020, CPPCCl, 100.0)
 	gui.show_message("Cayo Heist", "Bypassed Plasma Cutter")
 end)
 
-CSYONCAYO:add_sameline()
-CSYONCAYO:add_button("Remove All CCTV's", function()
+CayoHeistEditorMenu:add_sameline()
+CayoHeistEditorMenu:add_button("Remove All CCTV's", function()
 	for _, ent in pairs(entities.get_all_objects_as_handles()) do
 		for __, cam in pairs(CamList) do
 			if ENTITY.GET_ENTITY_MODEL(ent) == cam then
@@ -6721,8 +5911,8 @@ CamList = {
 	joaat("xm_prop_x17_server_farm_cctv_01"),
 }
 
-CSYONCAYO:add_sameline()
-CSYONCAYO:add_button("Delete Mission NPC's", function() -- Thanks to RazorGamerX for the help on this
+CayoHeistEditorMenu:add_sameline()
+CayoHeistEditorMenu:add_button("Delete Mission NPC's", function() -- Thanks to RazorGamerX for the help on this
 	for index, ped in ipairs(entities.get_all_peds_as_handles()) do
 		local model = ENTITY.GET_ENTITY_MODEL(ped)
 		if model == 0x7ED5AD78 or model == 0x6C8C08E5 or model == 0x995B3F9F or model == 0xB881AEE then
@@ -6732,9 +5922,9 @@ CSYONCAYO:add_button("Delete Mission NPC's", function() -- Thanks to RazorGamerX
 	end
 end)
 
-CSYONCAYO:add_separator()
-CSYONCAYO:add_text("After Heist")
-CSYONCAYO:add_button("Skip Cooldown", function()
+CayoHeistEditorMenu:add_separator()
+CayoHeistEditorMenu:add_text("After Heist")
+CayoHeistEditorMenu:add_button("Skip Cooldown", function()
 	-- Solo Skip
 	stats.set_int("MP0_H4_TARGET_POSIX", 1659643454)
 	stats.set_int("MP0_H4_COOLDOWN", 0)
@@ -6755,23 +5945,23 @@ CSYONCAYO:add_button("Skip Cooldown", function()
 	gui.show_message("Cayo Heist", "Skipped Cayo Perico Cooldown for all characters")
 	gui.show_message("Cayo Heist", "Go to story mode and come back to apply the reset")
 end)
-CSYONCAYO:add_separator()
-CSYONCAYO:add_text("How to Set Up or Bypass Cooldown:")
-CSYONCAYO:add_text(
+CayoHeistEditorMenu:add_separator()
+CayoHeistEditorMenu:add_text("How to Set Up or Bypass Cooldown:")
+CayoHeistEditorMenu:add_text(
 	"Make sure you have completed the heist and you are standing in front of the planning screen"
 )
-CSYONCAYO:add_text("Click Skip Cooldown, then click on your Preset and click Reset Kosatka Board")
+CayoHeistEditorMenu:add_text("Click Skip Cooldown, then click on your Preset and click Reset Kosatka Board")
 
-CSYONCAYO:add_separator()
-CSYONCAYO:add_text("Instant Heist Passed")
-CSYONCAYO:add_button("Instant Finish $$", function()
+CayoHeistEditorMenu:add_separator()
+CayoHeistEditorMenu:add_text("Instant Heist Passed")
+CayoHeistEditorMenu:add_button("Instant Finish $$", function()
 	locals.set_int(FMC2020, 50150, 9)
 	locals.set_int(FMC2020, 50150 + 1770 + 1, 50)
 	gui.show_message("Instant Heist Passed", "Activated")
 end)
 
 -- Cayo Bag Size & Value Editor
-local cayoSizeEditor = CSYONCAYO:add_tab("Size/Value Editor")
+local cayoSizeEditor = CayoHeistEditorMenu:add_tab("Size/Value Editor")
 cayoSizeEditor:add_text("Bag Size Editor")
 bagSizeVal = 1800
 cayoSizeEditor:add_imgui(function()
@@ -6915,63 +6105,62 @@ cayoSizeEditor:add_button("Reset Kosatka Board", function()
 	gui.show_message("Cayo Heist", "Planning board has been reset!")
 end)
 
-
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CSYONDOOMSDAY = CSYONH:add_tab("Doomsday Heist Editor")
+DoomsdayHeistEditorMenu = HeistsDataEditorMenu:add_tab("Doomsday Heist Editor")
 
-CSYONDOOMSDAY:add_button("One Click Setup Act 1: The Data Breaches", function()
-	STATS.STAT_SET_INT(joaat(MPX .. "GANGOPS_FLOW_MISSION_PROG"), 7, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "GANGOPS_FM_MISSION_PROG"), 7, true)
+DoomsdayHeistEditorMenu:add_button("One Click Setup Act 1: The Data Breaches", function()
+	stats.set_int(MPX() .. "GANGOPS_FLOW_MISSION_PROG", 7)
+	stats.set_int(MPX() .. "GANGOPS_FM_MISSION_PROG", 7)
 end)
 
-CSYONDOOMSDAY:add_button("One Click Setup Act 2: The Bodgan Problem", function()
-	STATS.STAT_SET_INT(joaat(MPX .. "GANGOPS_FLOW_MISSION_PROG"), 240, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "GANGOPS_FM_MISSION_PROG"), 248, true)
+DoomsdayHeistEditorMenu:add_button("One Click Setup Act 2: The Bodgan Problem", function()
+	stats.set_int(MPX() .. "GANGOPS_FLOW_MISSION_PROG", 240)
+	stats.set_int(MPX() .. "GANGOPS_FM_MISSION_PROG", 248)
 end)
 
-CSYONDOOMSDAY:add_button("One Click Setup Act 3: Doomsday Scenario", function()
-	STATS.STAT_SET_INT(joaat(MPX .. "GANGOPS_FLOW_MISSION_PROG"), 15872, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "GANGOPS_FM_MISSION_PROG"), 16128, true)
+DoomsdayHeistEditorMenu:add_button("One Click Setup Act 3: Doomsday Scenario", function()
+	stats.set_int(MPX() .. "GANGOPS_FLOW_MISSION_PROG", 15872)
+	stats.set_int(MPX() .. "GANGOPS_FM_MISSION_PROG", 16128)
 end)
 
-CSYONDOOMSDAY:add_text("Set Doomsday Heist Cuts")
-CSYONDOOMSDAY:add_text("Preset Cut")
-CSYONDOOMSDAY:add_button("100", function()
+DoomsdayHeistEditorMenu:add_text("Set Doomsday Heist Cuts")
+DoomsdayHeistEditorMenu:add_text("Preset Cut")
+DoomsdayHeistEditorMenu:add_button("100", function()
 	CutsPresetter(DCg1, DCg4, 100)
 end)
-CSYONDOOMSDAY:add_text("Custom Cuts")
-local dmsdyCut1 = CSYONDOOMSDAY:add_input_int("Cut 1")
-local dmsdyCut2 = CSYONDOOMSDAY:add_input_int("Cut 2")
-local dmsdyCut3 = CSYONDOOMSDAY:add_input_int("Cut 3")
-local dmsdyCut4 = CSYONDOOMSDAY:add_input_int("Cut 4")
-CSYONDOOMSDAY:add_button("Set Cuts", function()
+DoomsdayHeistEditorMenu:add_text("Custom Cuts")
+local dmsdyCut1 = DoomsdayHeistEditorMenu:add_input_int("Cut 1")
+local dmsdyCut2 = DoomsdayHeistEditorMenu:add_input_int("Cut 2")
+local dmsdyCut3 = DoomsdayHeistEditorMenu:add_input_int("Cut 3")
+local dmsdyCut4 = DoomsdayHeistEditorMenu:add_input_int("Cut 4")
+DoomsdayHeistEditorMenu:add_button("Set Cuts", function()
 	globals.set_int(DCg1, dmsdyCut1:get_value())
 	globals.set_int(DCg2, dmsdyCut2:get_value())
 	globals.set_int(DCg3, dmsdyCut3:get_value())
 	globals.set_int(DCg4, dmsdyCut4:get_value())
 end)
 
-CSYONDOOMSDAY:add_separator()
-CSYONDOOMSDAY:add_text("Preps")
-CSYONDOOMSDAY:add_button("Reset Preps", function()
+DoomsdayHeistEditorMenu:add_separator()
+DoomsdayHeistEditorMenu:add_text("Preps")
+DoomsdayHeistEditorMenu:add_button("Reset Preps", function()
 	DoomsdayActSetter(240, 0)
 end)
 
-CSYONDOOMSDAY:add_sameline()
-CSYONDOOMSDAY:add_button("Complete Preps", function()
+DoomsdayHeistEditorMenu:add_sameline()
+DoomsdayHeistEditorMenu:add_button("Complete Preps", function()
 	stats.set_int(MPX() .. "GANGOPS_FM_MISSION_PROG", -1)
 end)
 
-CSYONDOOMSDAY:add_separator()
-CSYONDOOMSDAY:add_text("By pass Doomsday Scenario hack")
-CSYONDOOMSDAY:add_button("By Act III Pass hack", function()
+DoomsdayHeistEditorMenu:add_separator()
+DoomsdayHeistEditorMenu:add_text("By pass Doomsday Scenario hack")
+DoomsdayHeistEditorMenu:add_button("By Act III Pass hack", function()
 	locals.set_int(FMC, DDSHl, 3)
 end)
 
-CSYONDOOMSDAY:add_separator()
-CSYONDOOMSDAY:add_text("Instant Heist Passed")
-CSYONDOOMSDAY:add_button("Instant Finish $$", function()
+DoomsdayHeistEditorMenu:add_separator()
+DoomsdayHeistEditorMenu:add_text("Instant Heist Passed")
+DoomsdayHeistEditorMenu:add_button("Instant Finish $$", function()
 	locals.set_int(FMC, 19746, 12)
 	locals.set_int(FMC, 19746 + 2686, 10000000)
 	locals.set_int(FMC, 28365 + 1, 99999)
@@ -6981,96 +6170,64 @@ end)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CSYON5 = CSYON:add_tab("Missions Selector And cooldown Menu")
+MissionsSelectorAndCooldownMenu = CSYON:add_tab("Missions Selector And cooldown Menu")
 
-CSYON5:add_button("Remove Dax Missions CoolDown ", function()
-	stats.set_int("MP" .. mpx() .. "_XM22JUGGALOWORKCDTIMER", -1)
+MissionsSelectorAndCooldownMenu:add_button("Remove Dax Missions CoolDown ", function()
+	stats.set_int(MPX() .. "_XM22JUGGALOWORKCDTIMER", -1)
 end)
 
-CSYON5:add_button("Remove VIP/MC Cool Down", function()
-	STATS.STAT_SET_INT(joaat("MPPLY_VIPGAMEPLAYDISABLEDTIMER"), 0, true)
+MissionsSelectorAndCooldownMenu:add_button("Remove VIP/MC Cool Down", function()
+	stats.set_int("MPPLY_VIPGAMEPLAYDISABLEDTIMER", 0)
 end)
 
-CSYON5:add_button("Skip Yacht Misions", function()
-	STATS.STAT_SET_INT(joaat(MPX .. "YACHT_MISSION_PROG"), 0, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "YACHT_MISSION_FLOW"), 21845, true)
-	STATS.STAT_SET_INT(joaat(MPX .. "CASINO_DECORATION_GIFT_1"), -1, true)
+MissionsSelectorAndCooldownMenu:add_button("Skip Yacht Misions", function()
+	stats.set_int(MPX() .. "YACHT_MISSION_PROG", 0)
+	stats.set_int(MPX() .. "YACHT_MISSION_FLOW", 21845)
+	stats.set_int(MPX() .. "CASINO_DECORATION_GIFT_1", -1)
 end)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CSYON1 = CSYON:add_tab("⚠️Credits⚠️")
+CreditsMenu = CSYON:add_tab("Credits")
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Yimura = CSYON1:add_tab("Yimura")
+Yimura = CreditsMenu:add_tab("Yimura")
 Yimura:add_text("Yim Menu Cheat Developer")
 Yimura:add_text("Cheat on GitHub:")
 Yimura:add_text("https://github.com/YimMenu/YimMenu")
 
-CSYONDEV = CSYON1:add_tab("CSYON")
-CSYONDEV:add_text("Codded This W Script With <3 To You All")
+CSYONDEV = CreditsMenu:add_tab("CSYON")
+CSYONDEV:add_text("Thanks to him for His W Script <3")
 CSYONDEV:add_text("Source:")
-CSYONDEV:add_text("https://github.com/CSY0N/CsyonSubMenu")
+CSYONDEV:add_text("https://github.com/YimMenu-Lua/Utimate-Menu")
 
-SLON = CSYON1:add_tab("SLON")
-SLON:add_text("For ''YimCeo v0.3 by Slon_.lua'' Code")
+CSYOND3V = CreditsMenu:add_tab("CSYON")
+CSYOND3V:add_text("Codded This W Script With <3 To You All")
+
+PLANTINDESK = CreditsMenu:add_tab("plantindesk")
+PLANTINDESK:add_text("For His W Cuts Editor And Useful Heists Hax")
+PLANTINDESK:add_text("Source:")
+PLANTINDESK:add_text("https://github.com/plantindesk/Silent-Night")
+
+SILENTSALO = CreditsMenu:add_tab("Silent")
+SILENTSALO:add_text("For His W Useful Unlocls Along With Casino And Gunvan Menu")
+SILENTSALO:add_text("Source:")
+SILENTSALO:add_text("https://github.com/SilentSal0/Silent-Night")
+
+visionary2709 = CreditsMenu:add_tab("visionary2709")
+visionary2709:add_text("For His W Updated Globals of 200 Vehicles")
+visionary2709:add_text("Source:")
+visionary2709:add_text("https://github.com/YimMenu-Lua/Removed-vehicles")
+
+SLON = CreditsMenu:add_tab("SLON")
+SLON:add_text("For ''YimCeo v0.6 by Slon_.lua'' Code")
 SLON:add_text("Source:")
 SLON:add_text("https://www.unknowncheats.me/forum/grand-theft-auto-v/591335-yimceo-ceo-crates-method-yimmenu.html")
 
-MOHAandgir489 = CSYON1:add_tab("MOHA & gir489returns")
-MOHAandgir489:add_text("For Drop Menu")
-
-ShineyWassabi = CSYON1:add_tab("ShineyWassabi & gir489returns")
-ShineyWassabi:add_text("For Unlock All Menu")
-ShineyWassabi:add_text("Source:")
-ShineyWassabi:add_text("https://github.com/YimMenu-Lua/UnlockEverything")
-
-Alestarov = CSYON1:add_tab("Alestarov")
+Alestarov = CreditsMenu:add_tab("Alestarov")
 Alestarov:add_text("For 1 Click Cayo Setup")
 Alestarov:add_text("Source:")
 Alestarov:add_text("https://github.com/YimMenu-Lua/Alestarov-Menu")
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
---[[
---────────────────────────────────────────────────────────────────────────────────────────
---─██████████████─██████████████─████████──████████─██████████████─██████──────────██████─
---─██░░░░░░░░░░██─██░░░░░░░░░░██─██░░░░██──██░░░░██─██░░░░░░░░░░██─██░░██████████──██░░██─
---─██░░██████████─██░░██████████─████░░██──██░░████─██░░██████░░██─██░░░░░░░░░░██──██░░██─
---─██░░██─────────██░░██───────────██░░░░██░░░░██───██░░██──██░░██─██░░██████░░██──██░░██─
---─██░░██─────────██░░██████████───████░░░░░░████───██░░██──██░░██─██░░██──██░░██──██░░██─
---─██░░██─────────██░░░░░░░░░░██─────████░░████─────██░░██──██░░██─██░░██──██░░██──██░░██─
---─██░░██─────────██████████░░██───────██░░██───────██░░██──██░░██─██░░██──██░░██──██░░██─
---─██░░██─────────────────██░░██───────██░░██───────██░░██──██░░██─██░░██──██░░██████░░██─
---─██░░██████████─██████████░░██───────██░░██───────██░░██████░░██─██░░██──██░░░░░░░░░░██─
---─██░░░░░░░░░░██─██░░░░░░░░░░██───────██░░██───────██░░░░░░░░░░██─██░░██──██████████░░██─
---─██████████████─██████████████───────██████───────██████████████─██████──────────██████─
---────────────────────────────────────────────────────────────────────────────────────────
-                                                                                                                               
-                                                                         dddddddd                                                
-        CCCCCCCCCCCCC                                                    d::::::d  iiii           tttt                           
-     CCC::::::::::::C                                                    d::::::d i::::i       ttt:::t                           
-   CC:::::::::::::::C                                                    d::::::d  iiii        t:::::t                           
-  C:::::CCCCCCCC::::C                                                    d:::::d               t:::::t                           
- C:::::C       CCCCCCrrrrr   rrrrrrrrr       eeeeeeeeeeee        ddddddddd:::::d iiiiiii ttttttt:::::ttttttt        ssssssssss   
-C:::::C              r::::rrr:::::::::r    ee::::::::::::ee    dd::::::::::::::d i:::::i t:::::::::::::::::t      ss::::::::::s  
-C:::::C              r:::::::::::::::::r  e::::::eeeee:::::ee d::::::::::::::::d  i::::i t:::::::::::::::::t    ss:::::::::::::s 
-C:::::C              rr::::::rrrrr::::::re::::::e     e:::::ed:::::::ddddd:::::d  i::::i tttttt:::::::tttttt    s::::::ssss:::::s
-C:::::C               r:::::r     r:::::re:::::::eeeee::::::ed::::::d    d:::::d  i::::i       t:::::t           s:::::s  ssssss 
-C:::::C               r:::::r     rrrrrrre:::::::::::::::::e d:::::d     d:::::d  i::::i       t:::::t             s::::::s      
-C:::::C               r:::::r            e::::::eeeeeeeeeee  d:::::d     d:::::d  i::::i       t:::::t                s::::::s   
- C:::::C       CCCCCC r:::::r            e:::::::e           d:::::d     d:::::d  i::::i       t:::::t    ttttttssssss   s:::::s 
-  C:::::CCCCCCCC::::C r:::::r            e::::::::e          d::::::ddddd::::::ddi::::::i      t::::::tttt:::::ts:::::ssss::::::s
-   CC:::::::::::::::C r:::::r             e::::::::eeeeeeee   d:::::::::::::::::di::::::i      tt::::::::::::::ts::::::::::::::s 
-     CCC::::::::::::C r:::::r              ee:::::::::::::e    d:::::::::ddd::::di::::::i        tt:::::::::::tt s:::::::::::ss  
-        CCCCCCCCCCCCC rrrrrrr                eeeeeeeeeeeeee     ddddddddd   dddddiiiiiiii          ttttttttttt    sssssssssss    
-                                                                                                                                 
-                                                                                                                                 
-                                                                                                                                 
-                                                                                                                                 
-          Resources used -> Ultimate controller by SLON 
-                         -> YimCeo by SLON                                                                                                       
-                         -> API - Thank you Yimura <3 
-                         -> Complied & Editied By CSYON 
---]]
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
