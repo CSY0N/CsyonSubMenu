@@ -135,8 +135,8 @@ TEQUILA = 262145 + 29458
 
 CSYON = gui.get_tab("** CSYON SubMenu 1.69 By CSYON**")
 
-CSYON:add_text("                      Game Build Version 3274⚠️")
-CSYON:add_text("                                	✅ v7")
+CSYON:add_text("                      Game Build Version 3274")
+CSYON:add_text("                                	   v7")
 
 LVLVal = stats.get_int(MPX() .. "CHAR_RANK_FM")
 
