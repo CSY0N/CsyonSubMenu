@@ -19,7 +19,6 @@
 > the link where is official yimura is in here --> https://matrix.to/#/!WIGXIeVdyETOYUHIdj:matrix.org or https://matrix.to/#/#yimmenu:matrix.org
 > Note: you need to be respectful it is not a random discord chat
 
-
 > [!WARNING]  
 > RIP Cargo Method 
 > Yes You Heard it Right Unfotunately The Most Used Money Method Among Modders Just Got Detected So > Just Stay Away From Any Ceo 6 mil script including CsyonSubMenu if you want to use it just use it with your own risk 
