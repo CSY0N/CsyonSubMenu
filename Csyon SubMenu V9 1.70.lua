@@ -40,8 +40,10 @@ local function MPX()
 	local PI = stats.get_int("MPPLY_LAST_MP_CHAR")
 	if PI == 0 then
 		return "MP0_"
-	else
+	elseif PI == 1 then
 		return "MP1_"
+	else
+		return "MP0_"
 	end
 end
 
@@ -9516,13 +9518,22 @@ roulette_outcomes_table = 1357
 roulette_ball_table     = 153
  
 local cslots = "casino_slots"
-slots_random_results_table = 1348
+slots_random_results_table = 1366
 
-prize_wheel_win_state = 280
+prize_wheel_win_state = 298
 prize_wheel_prize = 14
 prize_wheel_prize_state = 45
 
-
+CasinoServices:add_button("Bypass Casino Cooldown", function()
+	stats.set_int("MPPLY_CASINO_CHIPS_WON_GD", 0)
+	stats.set_int("MPPLY_CASINO_CHIPS_WONTIM", 0)
+	stats.set_int("MPPLY_CASINO_GMBLNG_GD", 0)
+	stats.set_int("MPPLY_CASINO_BAN_TIME", 0)
+	stats.set_int("MPPLY_CASINO_CHIPS_PURTIM", 0)
+	stats.set_int("MPPLY_CASINO_CHIPS_PUR_GD", 0)
+	stats.set_int("MPPLY_CASINO_CHIPS_SOLD", 0)
+	stats.set_int("MPPLY_CASINO_CHIPS_SELTIM", 0)
+end)
 
 CasinoServices:add_separator()
 CasinoServices:add_text("Casino Chips")
@@ -9550,6 +9561,14 @@ CasinoServices:add_button("Win Slot Machines", function()
 	for i = 3, 196 do
 		if i ~= 67 and i ~= 132 then
 			locals.set_int(cslots, slots_random_results_table + i, 6)
+		end
+	end
+end)
+
+CasinoServices:add_button("Lose Slot Machines", function()
+	for i = 3, 196 do
+		if i ~= 67 and i ~= 132 then
+			locals.set_int(cslots, slots_random_results_table + i, 0)
 		end
 	end
 end)
