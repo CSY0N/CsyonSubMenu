@@ -71,51 +71,56 @@ HIP = "heist_island_planning"
 --Globals & Locals & Variables--
 
 FMg = 262145 -- free mode global ("CASH_MULTIPLIER") //correct
-ACg1 = 1928958 + 1 + 1 -- global apartment player 1 cut global
-ACg2 = 1928958 + 1 + 2 -- global apartment player 2 cut global
-ACg3 = 1928958 + 1 + 3 -- global apartment player 3 cut global
-ACg4 = 1928958 + 1 + 4 -- global apartment player 4 cut global
-ACg5 = 1930201 + 3008 + 1 -- local apartment player 1 cut global
+ACg1 = 1929317 + 1 + 1 -- global apartment player 1 cut global
+ACg2 = 1929317 + 1 + 2 -- global apartment player 2 cut global
+ACg3 = 1929317 + 1 + 3 -- global apartment player 3 cut global
+ACg4 = 1929317 + 1 + 4 -- global apartment player 4 cut global
+ACg5 = 1931285 + 3008 + 1 -- local apartment player 1 cut global
 
 AUAJg1 = FMg + 9101 -- apartment unlock all jobs global 1 ("ROOT_ID_HASH_THE_FLECCA_JOB")
 AUAJg2 = FMg + 9106 -- apartment unlock all jobs global 2 ("ROOT_ID_HASH_THE_PRISON_BREAK")
 AUAJg3 = FMg + 9113 -- apartment unlock all jobs global 3 ("ROOT_ID_HASH_THE_HUMANE_LABS_RAID")
 AUAJg4 = FMg + 9119 -- apartment unlock all jobs global 4 ("ROOT_ID_HASH_SERIES_A_FUNDING")
 AUAJg5 = FMg + 9125 -- apartment unlock all jobs global 5 ("ROOT_ID_HASH_THE_PACIFIC_STANDARD_JOB")
-AIFl3 = 19746 -- apartment instant finish local 1
-AIFl4 = 28365 + 1 -- apartment instant finish local 2
-AIFl5 = 31621 + 69 -- apartment instant finish local 3
+AIFl3 = 20612 -- apartment instant finish local 1
+AIFl4 = 28400 + 1 -- apartment instant finish local 2
+AIFl5 = 31656 + 69 -- apartment instant finish local 3
+AFHl = 11812 + 24 -- apartment fleeca hack local 
+AFDl = 10143 + 11 -- apartment fleeca drill local
 
 DCRBl = 185 -- diamond casino reload board local
-DCCg1 = 1964849 + 1497 + 736 + 92 + 1 -- diamond casino player 1 cut global
-DCCg2 = 1964849 + 1497 + 736 + 92 + 2 -- diamond casino player 2 cut global
-DCCg3 = 1964849 + 1497 + 736 + 92 + 3 -- diamond casino player 3 cut global
-DCCg4 = 1964849 + 1497 + 736 + 92 + 4 -- diamond casino player 4 cut global
+DCCg1 = 1965614 + 1497 + 736 + 92 + 1 -- diamond casino player 1 cut global ("gb_casino_heist_planning")
+DCCg2 = 1965614 + 1497 + 736 + 92 + 2 -- diamond casino player 2 cut global
+DCCg3 = 1965614 + 1497 + 736 + 92 + 3 -- diamond casino player 3 cut global
+DCCg4 = 1965614 + 1497 + 736 + 92 + 4 -- diamond casino player 4 cut global
 DCCl = FMg + 28313 -- Casino_Cut_Lester_offset
 DCCh = FMg + 28349 - 1 --Casino_Cut_Hacker_offset
 DCCd = FMg + 28344 - 1 --Casino_Cut_Driver_offset
 DCCgun = FMg + 28339 - 1 --Casino_Cut_Gunman_offset
-DCFHl = 53019 -- diamond casino fingerprint hack local
-DCKHl = 54085 -- diamond casino keypad hack local
-DCDVDl1 = 10109 + 7 -- diamond casino drill vault door local 1
-DCDVDl2 = 10109 + 37 -- diamond casino drill vault door local 2
+DCFHl = 53087 -- diamond casino fingerprint hack local
+DCKHl = 54153 -- diamond casino keypad hack local
+DCDVDl1 = 10143 + 7 -- diamond casino drill vault door local 1 --("DLC_HEIST_MINIGAME_FLEECA_DRILLING_SCENE")
+DCDVDl2 = 10143 + 37 -- diamond casino drill vault door local 2
 
-GCg = 2685249 + 6615 -- global cut global (value2 = value2 * (num / 100f);)
-CPRSl = 1546 -- cayo perico reload screen local //correct
-CPCg1 = 1971648 + 831 + 56 + 1 -- cayo perico player 1 cut global
-CPCg2 = 1971648 + 831 + 56 + 2 -- cayo perico player 2 cut global
-CPCg3 = 1971648 + 831 + 56 + 3 -- cayo perico player 3 cut global
-CPCg4 = 1971648 + 831 + 56 + 4 -- cayo perico player 4 cut global
-CPBg = FMg + 29211 -- cayo perico bag global (1859395035)
-CPFHl = 24880 -- cayo perico fingerprint hack local
-CPPCCl = 30939 + 3 -- cayo perico plasma cutter cut local ("DLC_H4_anims_glass_cutter_Sounds")
-CPSTCl = 29700 -- cayo perico drainage pipe cut local
+CPCg1 = 1972414 + 831 + 56 + 1 -- cayo perico player 1 cut global
+CPCg2 = 1972414 + 831 + 56 + 2 -- cayo perico player 2 cut global
+CPCg3 = 1972414 + 831 + 56 + 3 -- cayo perico player 3 cut global
+CPCg4 = 1972414 + 831 + 56 + 4 -- cayo perico player 4 cut global
 
-DDSHl = 1271 + 135 -- doomsday doomsday scenario hack local
+CPFHl = 24986 -- cayo perico fingerprint hack local ("MP_STAT_CR_FINGERPRINT")
+CPPCCl = 31049 + 3 -- cayo perico plasma cutter cut local ("DLC_H4_anims_glass_cutter_Sounds")
+CPSTCl = 29810 -- cayo perico drainage pipe cut local ("IntroFinished")
+
+DDSHl = 1292 + 135 -- doomsday doomsday scenario hack local
 DCg1 = 1960755 + 812 + 50 + 1 -- doomsday player 1 cut global
 DCg2 = 1960755 + 812 + 50 + 2 -- doomsday player 2 cut global
 DCg3 = 1960755 + 812 + 50 + 3 -- doomsday player 3 cut global
 DCg4 = 1960755 + 812 + 50 + 4 -- doomsday player 4 cut global
+
+IHPB = 52171 --Instant Heist Passed Local Base (Casino And CayoPerico)
+IHPL = 52171 + 1776 + 1 --Instant Heist Passed Locals (Casino And CayoPerico)
+
+NLCl = 202 + 32 + 1
 
 SNOW = 262145 + 4413
 halloweatherAddress = 262145 + 32158
@@ -13868,7 +13873,7 @@ LSCMNote:add_text("before, all unlocks will be temporary only", function() end)
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
---© 2024 CSYON's Official Discord Server. All Rights Reserved--
+--© 2025 CSYON's Official Discord Server. All Rights Reserved--
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -13955,7 +13960,7 @@ DataEditiorAC:add_button("Reset Crate Sell Stats-0/0 Sales", function()
 	stats.set_int(MPX() .. "HANGAR_CONTRABAND_TOTAL", 0)
 	stats.set_int(MPX() .. "LFETIME_HANGAR_EARN_BONUS", 0)
 	stats.set_int(MPX() .. "RIVAL_HANGAR_CRATES_STOLEN", 0)
-	globals.set_int(1575035, 11) ----PlayerSessionBlank--------
+	globals.set_int(1575036, 11) ----PlayerSessionBlank--------
 	globals.set_int(1574589, 1) ----PlayerSessionNew----------
 	globals.set_int(1574589, 0) ----PlayerSessionNew------
 end)
