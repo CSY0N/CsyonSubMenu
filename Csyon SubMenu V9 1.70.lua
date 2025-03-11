@@ -10319,7 +10319,7 @@ YetiHuntEvent = EventsFeatures:add_tab("Yeti Hunt")
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 YetiHuntEvent:add_button("Enable Yeti Hunt Event", function()
-	globals.set_int(262145 + 34952, 1) -- enable the event with this lel Numbers 1833904680 
+	globals.set_int(262145 + 34952, 1) -- enable the event 1833904680
 end)
 
 YetiHuntEvent:add_button("Clue Location 1", function()
@@ -10353,36 +10353,36 @@ WM29Event = EventsFeatures:add_tab("WM29 Event")
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 WM29Event:add_button("Enable Event", function()
-	if globals.get_int(1882632 + (1 + (PLAYER.PLAYER_ID() * 146)) + 82) ~= 1 then
+	if globals.get_int(1882780 + (1 + (PLAYER.PLAYER_ID() * 149)) + 82) ~= 1 then
 		return
 	end
-	if globals.get_int(1882247 + 1 + 226) > 1 then
+	if globals.get_int(1882379 + 1 + 226) > 1 then
 		return
 	end
-	if not globals.get_int(2672855 + 4 + 4) then
+	if not globals.get_int(2672939 + 4 + 4) then
 		return
 	end
-	if globals.get_int(1882247 + 1 + 226) == 1 then
-		globals.set_int(1882247 + 1 + 226, 0)
-		globals.set_int(1882247 + 304, -1)
-		globals.set_int(1882247 + 304 + 1, 0)
-		globals.set_int(1882247 + 1 + 226 + 3, 1)
-		globals.set_int(1882247 + 1 + 226 + 5, -1)
-		globals.set_int(1882247 + 1 + 226 + 6, -1)
-		globals.set_float(1882247 + 1 + 226 + 10, 0.0)
-		globals.set_float(1882247 + 1 + 226 + 11, 0.0)
-		globals.set_float(1882247 + 1 + 226 + 12, 0.0)
-		globals.set_float(1882247 + 1 + 226 + 13, 400.0)
+	if globals.get_int(1882379 + 1 + 226) == 1 then
+		globals.set_int(1882379 + 1 + 226, 0)
+		globals.set_int(1882379 + 319, -1)
+		globals.set_int(1882379 + 319 + 1, 0)
+		globals.set_int(1882379 + 1 + 226 + 3, 1)
+		globals.set_int(1882379 + 1 + 226 + 5, -1)
+		globals.set_int(1882379 + 1 + 226 + 6, -1)
+		globals.set_float(1882379 + 1 + 226 + 10, 0.0)
+		globals.set_float(1882379 + 1 + 226 + 11, 0.0)
+		globals.set_float(1882379 + 1 + 226 + 12, 0.0)
+		globals.set_float(1882379 + 1 + 226 + 13, 400.0)
 	end
-	if globals.get_int(1882247 + 1 + 226) ~= 0 then
+	if globals.get_int(1882379 + 1 + 226) ~= 0 then
 		return
 	end
-	local value = globals.get_int(1882247 + 1 + 226 + 3 + 1) | (1 << 1)
-	globals.set_int(1882247 + 1 + 226 + 3 + 1, value)
-	globals.set_int(1882247 + 1 + 226 + 5, 0)
-	globals.set_int(1882247 + 1 + 226 + 6, 0)
+	local value = globals.get_int(1882379 + 1 + 226 + 3 + 1) | (1 << 1)
+	globals.set_int(1882379 + 1 + 226 + 3 + 1, value)
+	globals.set_int(1882379 + 1 + 226 + 5, 0)
+	globals.set_int(1882379 + 1 + 226 + 6, 0)
 	local freemodescript = "freemode"
-	freemodescript:set_int(freemodescript, 15727 + 181 + 1 + 1, 0x75F9)
+	freemodescript:set_int(freemodescript, 15827 + 181 + 1 + 1, 0x75F9)
 end)
 
 WM29Event:add_button("Teleport", function()
