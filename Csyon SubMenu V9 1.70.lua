@@ -1177,6 +1177,16 @@ script.register_looped("UnlockGenderChange", function(script)
 	end
 end)
 
+Self:add_button("Remove Published And Players Job Liked To You", function()
+	stats.set_int("MPPLY_AWD_FM_CR_DM_MADE", 0)
+	stats.set_int("MPPLY_AWD_FM_CR_RACES_MADE", 0)
+	stats.set_int("MPPLY_NUM_CAPTURES_CREATED", 0)
+	stats.set_int("MPPLY_LTS_CREATED", 0)
+	stats.set_int("MPPLY_AWD_FM_CR_PLAYED_BY_PEEP", 0)
+	stats.set_int("MPPLY_AWD_FM_CR_MISSION_SCORE", 0)
+	stats.set_int("MPPLY_FM_MISSION_LIKES", 0)
+end)
+
 RTPT = Self:add_checkbox("Remove Transaction Error")
 script.register_looped("Remove Transaction Error", function(script)
 	script:yield()
