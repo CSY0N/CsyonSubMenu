@@ -10673,13 +10673,13 @@ end)
 
 -- Look for what reads DISABLE_DAILY_OBJECTIVES and then there should be a while loop that stops at 3.
 local current_objectives_global = 2359296
-local weekly_words_global = 2737992
+local weekly_words_global = 2738865
 local objectives_state_global = 1574744
 
 FRESH:add_button("Complete All Daily & Weekly Challenges", function()
 	script.run_in_fiber(function(script)
-		for i = 0, 2 do --Unlock all daily rewards.
-			local objective = globals.get_int(current_objectives_global + (1 + (0 * 5570)) + 681 + 4244 + (1 + (i * 3)))
+			for i = 0, 2 do --Unlock all daily rewards.
+			local objective = globals.get_int(current_objectives_global + (1 + (0 * 5571)) + 681 + 4245 + (1 + (i * 3)))
 			globals.set_int(objectives_state_global + 1 + (1 + (i * 1)), objective)
 		end
 		globals.set_int(objectives_state_global, 1)
