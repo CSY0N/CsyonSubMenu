@@ -62,6 +62,28 @@ end
 
 is_player_male = (ENTITY.GET_ENTITY_MODEL(PLAYER.PLAYER_PED_ID()) == joaat("mp_m_freemode_01"))
 
+local currentlevel = stats.get_int(MPX() .. "CHAR_RANK_FM")
+local currentrp = stats.get_int(MPX() .. "CHAR_XP_FM")
+local currentcrewlevel = stats.get_int("MPPLY_CURRENT_CREW_RANK")
+
+script.register_looped("Stats Updater", function(script)
+    local success, err = pcall(function()
+        local newlevel = stats.get_int(MPX() .. "CHAR_RANK_FM")
+        local newrp = stats.get_int(MPX() .. "CHAR_XP_FM")
+        local newcrewlevel = stats.get_int("MPPLY_CURRENT_CREW_RANK")
+
+        if newlevel ~= currentlevel or newrp ~= currentrp or newcrewlevel ~= currentcrewlevel then
+            currentlevel = newlevel
+            currentrp = newrp
+            currentcrewlevel = newcrewlevel
+        end
+    end)
+    
+    if not success then
+        gui.show_message("Stats Update Error", "Failed to Update Stats: " .. tostring(err))
+    end
+end)
+
 --Required Scripts--
 
 FMC = "fm_mission_controller"
@@ -71,59 +93,76 @@ HIP = "heist_island_planning"
 --Globals & Locals & Variables--
 
 FMg = 262145 -- free mode global ("CASH_MULTIPLIER") //correct
-ACg1 = 1929317 + 1 + 1 -- global apartment player 1 cut global
-ACg2 = 1929317 + 1 + 2 -- global apartment player 2 cut global
-ACg3 = 1929317 + 1 + 3 -- global apartment player 3 cut global
-ACg4 = 1929317 + 1 + 4 -- global apartment player 4 cut global
-ACg5 = 1931285 + 3008 + 1 -- local apartment player 1 cut global
+CSg1    = 1575038 						-- change session (type) 1 					// Guide:   NETWORK::UGC_SET_USING_OFFLINE_CONTENT(false);
+CSg2    = 1574589 						-- change session (switch) 2 				// Guide:   MP_POST_MATCH_TRANSITION_SCENE
+CSg3    = 1574589 + 2 					-- change session (quit) 3 					// Guide:   MP_POST_MATCH_TRANSITION_SCENE
 
+-- Apartment Heist
+ACg1 = 1931323 + 1 + 1 -- global apartment player 1 cut global ("fmmc_launcher")
+ACg2 = 1931323 + 1 + 2 -- global apartment player 2 cut global ("fmmc_launcher")
+ACg3 = 1931323 + 1 + 3 -- global apartment player 3 cut global ("fmmc_launcher")
+ACg4 = 1931323 + 1 + 4 -- global apartment player 4 cut global ("fmmc_launcher")
+ACg5 = 1933291 + 3008 + 1 -- local apartment player 1 cut global ("fmmc_launcher")
 AUAJg1 = FMg + 9101 -- apartment unlock all jobs global 1 ("ROOT_ID_HASH_THE_FLECCA_JOB")
 AUAJg2 = FMg + 9106 -- apartment unlock all jobs global 2 ("ROOT_ID_HASH_THE_PRISON_BREAK")
 AUAJg3 = FMg + 9113 -- apartment unlock all jobs global 3 ("ROOT_ID_HASH_THE_HUMANE_LABS_RAID")
 AUAJg4 = FMg + 9119 -- apartment unlock all jobs global 4 ("ROOT_ID_HASH_SERIES_A_FUNDING")
 AUAJg5 = FMg + 9125 -- apartment unlock all jobs global 5 ("ROOT_ID_HASH_THE_PACIFIC_STANDARD_JOB")
-AIFl3 = 20612 -- apartment instant finish local 1
-AIFl4 = 28400 + 1 -- apartment instant finish local 2
-AIFl5 = 31656 + 69 -- apartment instant finish local 3
-AFHl = 11812 + 24 -- apartment fleeca hack local 
-AFDl = 10143 + 11 -- apartment fleeca drill local
+AIFl3 = 19787 -- apartment instant finish local 1
+AIFl4 = 19787 + 2686 -- apartment instant finish local 2
+AIFl5 = 28407 + 1 -- apartment instant finish local 3
+AIFl6 = 31663 + 1 + 68
+AFHl = 11818 + 24 -- apartment fleeca hack local
+AFDl = 10107 + 11 -- apartment fleeca drill local
+AHSo = 19789  -- Apartment heist skip checkpoint
 
-DCRBl = 185 -- diamond casino reload board local
-DCCg1 = 1965614 + 1497 + 736 + 92 + 1 -- diamond casino player 1 cut global ("gb_casino_heist_planning")
-DCCg2 = 1965614 + 1497 + 736 + 92 + 2 -- diamond casino player 2 cut global
-DCCg3 = 1965614 + 1497 + 736 + 92 + 3 -- diamond casino player 3 cut global
-DCCg4 = 1965614 + 1497 + 736 + 92 + 4 -- diamond casino player 4 cut global
-DCCl = FMg + 28313 -- Casino_Cut_Lester_offset
-DCCh = FMg + 28349 - 1 --Casino_Cut_Hacker_offset
-DCCd = FMg + 28344 - 1 --Casino_Cut_Driver_offset
-DCCgun = FMg + 28339 - 1 --Casino_Cut_Gunman_offset
-DCFHl = 53087 -- diamond casino fingerprint hack local
-DCKHl = 54153 -- diamond casino keypad hack local
-DCDVDl1 = 10143 + 7 -- diamond casino drill vault door local 1 --("DLC_HEIST_MINIGAME_FLEECA_DRILLING_SCENE")
-DCDVDl2 = 10143 + 37 -- diamond casino drill vault door local 2
+-- Diamond Casino Heist
+DCRBl = 208 -- diamond casino reload board local
+DCCg1 = 1967717 + 1497 + 736 + 92 + 1 -- diamond casino player 1 cut global ("gb_casino_heist_planning")
+DCCg2 = 1967717 + 1497 + 736 + 92 + 2 -- diamond casino player 2 cut global ("gb_casino_heist_planning")
+DCCg3 = 1967717 + 1497 + 736 + 92 + 3 -- diamond casino player 3 cut global ("gb_casino_heist_planning")
+DCCg4 = 1967717 + 1497 + 736 + 92 + 4 -- diamond casino player 4 cut global ("gb_casino_heist_planning")
+DCCl = FMg + 28313 -- ("CH_LESTER_CUT")
+DCCh = FMg + 28349 - 1 --("2027377935")
+DCCd = FMg + 28344 - 1 --("88090906")
+DCCgun = FMg + 28339 - 1 --("74718927")
+DCFHl = 53127 -- diamond casino fingerprint hack local
+DCKHl = 54193 -- diamond casino keypad hack local
+DCDVDl1 = 10107 + 7 -- diamond casino drill vault door local 1 --("DLC_HEIST_MINIGAME_FLEECA_DRILLING_SCENE") in ("fm_mission_controller")
+DCDVDl2 = 10107 + 37 -- diamond casino drill vault door local 2 --("fm_mission_controller")
+DCXf1 = 19787
+DCXf2 = 19787 + 1062
+DCXf3 = 19787 + 1740 + 1
+DCXf4 = 19787 + 2686
+DCXf5 = 28407 + 1
+DCXf6 = 31663 + 1 + 68
 
-CPCg1 = 1972414 + 831 + 56 + 1 -- cayo perico player 1 cut global
-CPCg2 = 1972414 + 831 + 56 + 2 -- cayo perico player 2 cut global
-CPCg3 = 1972414 + 831 + 56 + 3 -- cayo perico player 3 cut global
-CPCg4 = 1972414 + 831 + 56 + 4 -- cayo perico player 4 cut global
+-- Cayo Perico Heist
+CPRSl = 1566 -- cayo perico reload screen local
+CPCg1 = 1974520 + 831 + 56 + 1 -- cayo perico player 1 cut global --("heist_island_planning")
+CPCg2 = 1974520 + 831 + 56 + 2 -- cayo perico player 2 cut global --("heist_island_planning")
+CPCg3 = 1974520 + 831 + 56 + 3 -- cayo perico player 3 cut global --("heist_island_planning")
+CPCg4 = 1974520 + 831 + 56 + 4 -- cayo perico player 4 cut global --("heist_island_planning")
+CPFHl = 25058 -- cayo perico fingerprint hack local ("heist") in ("fm_mission_controller_2020")
+CPPCCl = 31123 + 3 -- cayo perico plasma cutter cut local ("DLC_H4_anims_glass_cutter_Sounds") in ("fm_mission_controller_2020")
+CPSTCl = 29883 -- cayo perico drainage pipe cut local ("IntroFinished") in ("fm_mission_controller_2020")
+CPXf1 = 54353 -- cayo perico instant finish local 1
+CPXf2 = 54353 + 1776 + 1 -- cayo perico instant finish local 2
 
-CPFHl = 24986 -- cayo perico fingerprint hack local ("MP_STAT_CR_FINGERPRINT")
-CPPCCl = 31049 + 3 -- cayo perico plasma cutter cut local ("DLC_H4_anims_glass_cutter_Sounds")
-CPSTCl = 29810 -- cayo perico drainage pipe cut local ("IntroFinished")
+-- Doomsday Heist
+DDSHl = 1294 + 135 -- doomsday doomsday scenario hack local
+DCg1 = 1963610 + 812 + 50 + 1 -- doomsday player 1 cut global --("gb_gang_ops_planning")
+DCg2 = 1963610 + 812 + 50 + 2 -- doomsday player 2 cut global --("gb_gang_ops_planning")
+DCg3 = 1963610 + 812 + 50 + 3 -- doomsday player 3 cut global --("gb_gang_ops_planning")
+DCg4 = 1963610 + 812 + 50 + 4 -- doomsday player 4 cut global --("gb_gang_ops_planning")
 
-DDSHl = 1292 + 135 -- doomsday doomsday scenario hack local
-DCg1 = 1960755 + 812 + 50 + 1 -- doomsday player 1 cut global
-DCg2 = 1960755 + 812 + 50 + 2 -- doomsday player 2 cut global
-DCg3 = 1960755 + 812 + 50 + 3 -- doomsday player 3 cut global
-DCg4 = 1960755 + 812 + 50 + 4 -- doomsday player 4 cut global
+IHPB = 54353 --Instant Heist Passed Local Base (Casino And CayoPerico)
+IHPL = 54353 + 1776 + 1 --Instant Heist Passed Locals (Casino And CayoPerico)
 
-IHPB = 52171 --Instant Heist Passed Local Base (Casino And CayoPerico)
-IHPL = 52171 + 1776 + 1 --Instant Heist Passed Locals (Casino And CayoPerico)
+NLCl = 204 + 32 + 1 --("nightclub_office_cutscene") in ("am_mp_nightclub")
 
-NLCl = 202 + 32 + 1
-
-SNOW = 262145 + 4413
-halloweatherAddress = 262145 + 32158
+SNOW = FMg + 4413
+halloweatherAddress = FMg + 32157
 
 --BV = Ballastic Value----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -131,32 +170,32 @@ BV = 262145 + 20024
 
 --CCBL = Casino Chips Buy Limit-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CCBL0 = 262145 + 26535
-CCBL1 = 262145 + 26536
+CCBL0 = 262145 + 26534
+CCBL1 = 262145 + 26535
 
 --BAS=Bag Size------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-BAS1 = 262145 + 29211
+BAS1 = 262145 + 29210
 
 --PSV=Panther Statue-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-PSV = 262145 + 29463
+PSV = 262145 + 29462
 
 --PDIAMOND=Pink Diamond---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-PDIAMOND = 262145 + 29461
+PDIAMOND = 262145 + 29460
 
 --BB=Bearer Bonds---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-BB = 262145 + 29460
+BB = 262145 + 29459
 
 --RN=Ruby Necklace--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-RN = 262145 + 29459
+RN = 262145 + 29458
 
 --TEQUILA=Tequila---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-TEQUILA = 262145 + 29458
+TEQUILA = 262145 + 29457
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -192,7 +231,7 @@ local holdF              = false
 local timerA             = 0
 local timerB             = 0
 -- local defaultFcamber     = 0
--- local defaultRcamber     = 0
+-- local defaultRcamber     = 0  // if want you can use it but dont needed.
 -- local fCamber            = 0
 -- local rCamber            = 0
 local lastVeh            = 0
@@ -382,7 +421,7 @@ gui.show_message("Csyon SubMenu", "Csyon Script loaded successfully!")
 CSYON = gui.get_tab("**CSYON SubMenu 1.71**					  	**Created By CSYON**")
 
 CSYON:add_text("		Game Build Version 3570		")
-CSYON:add_text("					v9.2				")
+CSYON:add_text("					v9.3				")
 
 CSYON:add_text("Your level                " .. stats.get_int(MPX() .. "CHAR_RANK_FM"))
 
@@ -9459,51 +9498,51 @@ Tunables:add_imgui(function()
 	end
 end)
 
-apmvalue = globals.get_float(262145 + 25490)
+apmvalue = globals.get_float(262145 + 25489)
 Tunables:add_imgui(function()
 	apmvalue, used = ImGui.DragInt("AP", apmvalue, 1, 100000)
 	if used then
-		globals.set_float(262145 + 25490, apmvalue)
+		globals.set_float(262145 + 25489, apmvalue)
 	end
 end)
 
-srmvalue = globals.get_float(262145 + 30980)
+srmvalue = globals.get_float(262145 + 30979)
 Tunables:add_imgui(function()
 	srmvalue, used = ImGui.DragInt("Street Races", srmvalue, 1, 100000)
 	if used then
-		globals.set_float(262145 + 30980, srmvalue)
+		globals.set_float(262145 + 30979, srmvalue)
 	end
 end)
 
-pmvalue = globals.get_float(262145 + 30981)
+pmvalue = globals.get_float(262145 + 30980)
 Tunables:add_imgui(function()
 	pmvalue, used = ImGui.DragInt("Pursuits", pmvalue, 1, 100000)
 	if used then
-		globals.set_float(262145 + 30981, pmvalue)
+		globals.set_float(262145 + 30980, pmvalue)
 	end
 end)
 
-f2fmvalue = globals.get_float(262145 + 30982)
+f2fmvalue = globals.get_float(262145 + 30981)
 Tunables:add_imgui(function()
 	f2fmvalue, used = ImGui.DragInt("Face2Face", f2fmvalue, 1, 100000)
 	if used then
-		globals.set_float(262145 + 30982, f2fmvalue)
+		globals.set_float(262145 + 30981, f2fmvalue)
 	end
 end)
 
-lscmmvalue = globals.get_float(262145 + 30983)
+lscmmvalue = globals.get_float(262145 + 30982)
 Tunables:add_imgui(function()
 	lscmmvalue, used = ImGui.DragInt("LS Car Meet", lscmmvalue, 1, 100000)
 	if used then
-		globals.set_float(262145 + 30983, lscmmvalue)
+		globals.set_float(262145 + 30982, lscmmvalue)
 	end
 end)
 
-lscmotmvalue = globals.get_float(262145 + 30984)
+lscmotmvalue = globals.get_float(262145 + 30983)
 Tunables:add_imgui(function()
 	lscmotmvalue, used = ImGui.DragInt("LS Car Meet on track", lscmotmvalue, 1, 100000)
 	if used then
-		globals.set_float(262145 + 30984, lscmotmvalue)
+		globals.set_float(262145 + 30983, lscmotmvalue)
 	end
 end)
 
@@ -9533,9 +9572,9 @@ roulette_outcomes_table = 1357
 roulette_ball_table     = 153
  
 local cslots = "casino_slots"
-slots_random_results_table = 1366
+slots_random_results_table = 1370
 
-prize_wheel_win_state = 298
+prize_wheel_win_state = 300
 prize_wheel_prize = 14
 prize_wheel_prize_state = 45
 
@@ -10319,7 +10358,7 @@ YetiHuntEvent = EventsFeatures:add_tab("Yeti Hunt")
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 YetiHuntEvent:add_button("Enable Yeti Hunt Event", function()
-	globals.set_int(262145 + 34952, 1) -- enable the event 1833904680
+	globals.set_int(262145 + 34951, 1) -- enable the event 1833904680
 end)
 
 YetiHuntEvent:add_button("Clue Location 1", function()
@@ -10421,7 +10460,7 @@ end)
 Achievements = CSU:add_tab("Achievements")
 
 Acv0 = false
-AG = 4543384 + 1
+AG = 4546910 + 1
 
 Achievements:add_button("Unlock All Achievements", function()
 		script.run_in_fiber(function(script)
@@ -10673,8 +10712,8 @@ end)
 
 -- Look for what reads DISABLE_DAILY_OBJECTIVES and then there should be a while loop that stops at 3.
 local current_objectives_global = 2359296
-local weekly_words_global = 2738865
-local objectives_state_global = 1574744
+local weekly_words_global = 2739243
+local objectives_state_global = 1574745
 
 FRESH:add_button("Complete All Daily & Weekly Challenges", function()
 	script.run_in_fiber(function(script)
@@ -13895,14 +13934,15 @@ AirCargos = CSYON7:add_tab("Air Cargo")
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-CARGO1 = 262145 + 22493
-CARGO2 = 262145 + 22494
-CARGO3 = 262145 + 22495
-CARGO4 = 262145 + 22496
-CARGO5 = 262145 + 22497
-CARGO6 = 262145 + 22498
-CARGO7 = 262145 + 22499
-CARGO8 = 262145 + 22500
+CARGO1 = 262145 + 22492
+CARGO2 = 262145 + 22493
+CARGO3 = 262145 + 22494
+CARGO4 = 262145 + 22495
+CARGO5 = 262145 + 22496
+CARGO6 = 262145 + 22497
+CARGO7 = 262145 + 22498
+CARGO8 = 262145 + 22499
+CARGO9 = 262145 + 22500
 
 local hanvalue = AirCargos:add_input_int("Crate Value")
 
@@ -13916,6 +13956,7 @@ AirCargos:add_button("Set Value", function()
 	    globals.set_int(CARGO6, HangarCrateVlaue)
 	    globals.get_int(CARGO7, HangarCrateVlaue)
 	    globals.set_int(CARGO8, HangarCrateVlaue)
+		globals.set_int(CARGO9, HangarCrateVlaue)
 		gui.show_message(
 			"Crate Value Setter",
 			"Your Crates Values was set to " .. HangarCrateVlaue .. ".")
@@ -14379,13 +14420,13 @@ end)
 
 NightClubSafe = CSYON7:add_tab("NightClub Safe Loop")
 
-NCSCB = NightClubSafe:add_checkbox("Enable Nitghtclub $300k/15s (Safe AFK)")
+NCSCB = NightClubSafe:add_checkbox("Enable Nitghtclub $300k/3.5s (Safe AFK)")
 script.register_looped("nightclubloop", function(script)
 	script:yield()
 	if NCSCB:is_enabled() == true then
 		stats.set_int(MPX() .. "CLUB_POPULARITY", 1000)
 		stats.set_int(MPX() .. "CLUB_PAY_TIME_LEFT", -1)
-		script:sleep(3000)
+		script:sleep(1000)
 	end
 end)
 
