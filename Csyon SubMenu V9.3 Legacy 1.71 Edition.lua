@@ -87,6 +87,7 @@ end)
 --Required Scripts--
 
 FMC = "fm_mission_controller"
+FMMCL = "fmmc_launcher"
 FMC2020 = "fm_mission_controller_2020"
 HIP = "heist_island_planning"
 
