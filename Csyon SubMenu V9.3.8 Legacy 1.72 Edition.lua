@@ -138,7 +138,7 @@ DCXf5 = 28412 + 1
 DCXf6 = 31668 + 1 + 68
 -- Cayo Perico Heist
 CPRSl = 1568 -- cayo perico reload screen local
-CPCg1 = 1978755 + 831 + 56 +  -- cayo perico player 1 cut global --("heist_island_planning")
+CPCg1 = 1978755 + 831 + 56 + 1  -- cayo perico player 1 cut global --("heist_island_planning")
 CPCg2 = 1978755 + 831 + 56 + 2 -- cayo perico player 2 cut global --("heist_island_planning")
 CPCg3 = 1978755 + 831 + 56 + 3 -- cayo perico player 3 cut global --("heist_island_planning")
 CPCg4 = 1978755 + 831 + 56 + 4 -- cayo perico player 4 cut global --("heist_island_planning")
