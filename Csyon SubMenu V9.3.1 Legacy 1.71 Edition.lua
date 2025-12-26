@@ -103,8 +103,6 @@ ACg1 = 1935536 + 1 + 1 -- global apartment player 1 cut global ("fmmc_launcher")
 ACg2 = 1935536 + 1 + 2 -- global apartment player 2 cut global ("fmmc_launcher")
 ACg3 = 1935536 + 1 + 3 -- global apartment player 3 cut global ("fmmc_launcher")
 ACg4 = 1935536 + 1 + 4 -- global apartment player 4 cut global ("fmmc_launcher")
-
-
 ACg5 = 1937504 + 3008 + 1 -- local apartment player 1 cut global ("fmmc_launcher")
 AUAJg1 = FMg + 9184 -- apartment unlock all jobs global 1 ("ROOT_ID_HASH_THE_FLECCA_JOB")
 AUAJg2 = FMg + 9189 -- apartment unlock all jobs global 2 ("ROOT_ID_HASH_THE_PRISON_BREAK")
