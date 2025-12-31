@@ -84,6 +84,10 @@ script.register_looped("Stats Updater", function(script)
     end
 end)
 
+
+
+
+
 --Required Scripts--
 
 FMC = "fm_mission_controller"
@@ -118,10 +122,10 @@ AFDl = 10109 + 11 -- apartment fleeca drill local
 AHSo = 19791  -- Apartment heist skip checkpoint
 -- Diamond Casino Heist
 DCRBl = 208 -- diamond casino reload board local
-DCCg1 = 1971951 + 1497 + 736 + 92 + 1 -- diamond casino player 1 cut global ("gb_casino_heist_planning")
-DCCg2 = 1971951 + 1497 + 736 + 92 + 2 -- diamond casino player 2 cut global ("gb_casino_heist_planning")
-DCCg3 = 1971951 + 1497 + 736 + 92 + 3 -- diamond casino player 3 cut global ("gb_casino_heist_planning")
-DCCg4 = 1971951 + 1497 + 736 + 92 + 4 -- diamond casino player 4 cut global ("gb_casino_heist_planning")
+DCCg1 = 1971952 + 1497 + 736 + 92 + 1 -- diamond casino player 1 cut global ("gb_casino_heist_planning")
+DCCg2 = 1971952 + 1497 + 736 + 92 + 2 -- diamond casino player 2 cut global ("gb_casino_heist_planning")
+DCCg3 = 1971952 + 1497 + 736 + 92 + 3 -- diamond casino player 3 cut global ("gb_casino_heist_planning")
+DCCg4 = 1971952 + 1497 + 736 + 92 + 4 -- diamond casino player 4 cut global ("gb_casino_heist_planning")
 DCCl = FMg + 28401 -- ("CH_LESTER_CUT")
 DCCh = FMg + 28437 - 1 --("2027377935")
 DCCd = FMg + 28432 - 1 --("88090906")
@@ -138,10 +142,10 @@ DCXf5 = 28412 + 1
 DCXf6 = 31668 + 1 + 68
 -- Cayo Perico Heist
 CPRSl = 1568 -- cayo perico reload screen local
-CPCg1 = 1978755 + 831 + 56 + 1  -- cayo perico player 1 cut global --("heist_island_planning")
-CPCg2 = 1978755 + 831 + 56 + 2 -- cayo perico player 2 cut global --("heist_island_planning")
-CPCg3 = 1978755 + 831 + 56 + 3 -- cayo perico player 3 cut global --("heist_island_planning")
-CPCg4 = 1978755 + 831 + 56 + 4 -- cayo perico player 4 cut global --("heist_island_planning")
+CPCg1 = 1978756 + 831 + 56 + 1  -- cayo perico player 1 cut global --("heist_island_planning")
+CPCg2 = 1978756 + 831 + 56 + 2 -- cayo perico player 2 cut global --("heist_island_planning")
+CPCg3 = 1978756 + 831 + 56 + 3 -- cayo perico player 3 cut global --("heist_island_planning")
+CPCg4 = 1978756 + 831 + 56 + 4 -- cayo perico player 4 cut global --("heist_island_planning")
 CPFHl = 26084 -- cayo perico fingerprint hack local ("heist") in ("fm_mission_controller_2020")
 CPPCCl = 32187 + 3  -- cayo perico plasma cutter cut local ("DLC_H4_anims_glass_cutter_Sounds") in ("fm_mission_controller_2020")
 CPSTCl = 30947 -- cayo perico drainage pipe cut local ("IntroFinished") in ("fm_mission_controller_2020")
@@ -1196,8 +1200,14 @@ event.register_handler(menu_event.ScriptsReloaded, function()
     csyontokyodrift()
 end)
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Self:add_button("Force Cloud Save", function()
+    script.run_in_fiber(function()
+        STATS.STAT_SAVE(0, 0, 3, 0)
+    end)
+end)
 AGCT = Self:add_checkbox("Unlock Gender Change")
 script.register_looped("UnlockGenderChange", function(script)
 	script:yield()
