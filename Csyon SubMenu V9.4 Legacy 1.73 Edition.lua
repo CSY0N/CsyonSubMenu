@@ -15712,7 +15712,7 @@ L7NEG:add_text("Source:")
 L7NEG:add_text("https://github.com/YimMenu-Lua/Utimate-Menu")
 
 CSYOND3V = Credits:add_tab("CSYON")
-CSYOND3V:add_text("Codded This W Script With <3 To You All")
+CSYOND3V:add_text("Owner and Codded This W Script With <3 To You All")
 
 PyxalonDev = Credits:add_tab("Pyxalon")
 PyxalonDev:add_text("Maintenance & Updates")
