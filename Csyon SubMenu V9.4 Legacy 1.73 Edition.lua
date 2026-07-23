@@ -94,7 +94,7 @@ HIP = "heist_island_planning"
 --Globals & Locals & Variables--
 
 FMg = 262145 -- free mode global ("CASH_MULTIPLIER") //correct
-CSg1    = 1575042					-- change session (type) 1 					// Guide:   NETWORK::UGC_SET_USING_OFFLINE_CONTENT(false);
+CSg1    = 1575046					-- change session (type) 1 					// Guide:   NETWORK::UGC_SET_USING_OFFLINE_CONTENT(false);
 CSg2    = 1574589 						-- change session (switch) 2 				// Guide:   MP_POST_MATCH_TRANSITION_SCENE
 CSg3    = 1574589 + 2 					-- change session (quit) 3 					// Guide:   MP_POST_MATCH_TRANSITION_SCENE
 
@@ -109,19 +109,19 @@ AUAJg2 = FMg + 9189 -- apartment unlock all jobs global 2 ("ROOT_ID_HASH_THE_PRI
 AUAJg3 = FMg + 9196 -- apartment unlock all jobs global 3 ("ROOT_ID_HASH_THE_HUMANE_LABS_RAID")
 AUAJg4 = FMg + 9202 -- apartment unlock all jobs global 4 ("ROOT_ID_HASH_SERIES_A_FUNDING")
 AUAJg5 = FMg + 9208 -- apartment unlock all jobs global 5 ("ROOT_ID_HASH_THE_PACIFIC_STANDARD_JOB")
-AIFl3 = 19791 -- apartment instant finish local 1
-AIFl4 = 19791 + 2686 -- apartment instant finish local 2
-AIFl5 = 28722 + 1 -- apartment instant finish local 3
+AIFl3 = 19808 -- apartment instant finish local 1
+AIFl4 = 19808 + 1062 -- apartment instant finish local 2
+AIFl5 = 19808 + 1740 + 1 -- apartment instant finish local 3
 AIFl6 = 31981 + 1 + 68
-AFHl = 1877158 + 24 -- apartment fleeca hack local
+AFHl = 11837 + 24 -- apartment fleeca hack local
 AFDl = 10125 + 11 -- apartment fleeca drill local
-AHSo = 19791  -- Apartment heist skip checkpoint
+AHSo = 19808 + 2  -- Apartment heist skip checkpoint
 -- Diamond Casino Heist
-DCRBl = 208 -- diamond casino reload board local
-DCCg1 = 1971951 + 1497 + 736 + 92 + 1 -- diamond casino player 1 cut global ("gb_casino_heist_planning")
-DCCg2 = 1971951 + 1497 + 736 + 92 + 2 -- diamond casino player 2 cut global ("gb_casino_heist_planning")
-DCCg3 = 1971951 + 1497 + 736 + 92 + 3 -- diamond casino player 3 cut global ("gb_casino_heist_planning")
-DCCg4 = 1971951 + 1497 + 736 + 92 + 4 -- diamond casino player 4 cut global ("gb_casino_heist_planning")
+DCRBl = 217 -- diamond casino reload board local
+DCCg1 = 1972483 + 1497 + 736 + 92 + 1 -- diamond casino player 1 cut global ("gb_casino_heist_planning")
+DCCg2 = 1972483 + 1497 + 736 + 92 + 2 -- diamond casino player 2 cut global ("gb_casino_heist_planning")
+DCCg3 = 1972483 + 1497 + 736 + 92 + 3 -- diamond casino player 3 cut global ("gb_casino_heist_planning")
+DCCg4 = 1972483 + 1497 + 736 + 92 + 4 -- diamond casino player 4 cut global ("gb_casino_heist_planning")
 DCCl = FMg + 28401 -- ("CH_LESTER_CUT")
 DCCh = FMg + 28437 - 1 --("2027377935")
 DCCd = FMg + 28432 - 1 --("88090906")
@@ -130,22 +130,22 @@ DCFHl = 54118 -- diamond casino fingerprint hack local
 DCKHl = 55188 -- diamond casino keypad hack local
 DCDVDl1 = 10109 + 7 -- diamond casino drill vault door local 1 --("DLC_HEIST_MINIGAME_FLEECA_DRILLING_SCENE") in ("fm_mission_controller")
 DCDVDl2 = 10109 + 37 -- diamond casino drill vault door local 2 --("fm_mission_controller")
-DCXf1 = 19791
-DCXf2 = 19791 + 1062
-DCXf3 = 19808 + 40 + 1
-DCXf4 = 19791 + 2686
+DCXf1 = 19808
+DCXf2 = 19808 + 1062
+DCXf3 = 19808 + 1740 + 1
+DCXf4 = 19808 + 2686
 DCXf5 = 28722 + 1
-DCXf6 = 31981 + 1 + 68
+DCXf6 = 1981 + 1 + 68
 -- Cayo Perico Heist
 CPRSl = 1578 -- cayo perico reload screen local
-CPCg1 = 1978755 + 831 + 56 + 1  -- cayo perico player 1 cut global --("heist_island_planning")
-CPCg2 = 1978755 + 831 + 56 + 2 -- cayo perico player 2 cut global --("heist_island_planning")
-CPCg3 = 1978755 + 831 + 56 + 3 -- cayo perico player 3 cut global --("heist_island_planning")
-CPCg4 = 1978755 + 831 + 56 + 4 -- cayo perico player 4 cut global --("heist_island_planning")
-CPFHl = 26084 -- cayo perico fingerprint hack local ("heist") in ("fm_mission_controller_2020")
+CPCg1 = 1980404 + 831 + 56 + 1  -- cayo perico player 1 cut global --("heist_island_planning")
+CPCg2 = 1980404 + 831 + 56 + 2 -- cayo perico player 2 cut global --("heist_island_planning")
+CPCg3 = 1980404 + 831 + 56 + 3 -- cayo perico player 3 cut global --("heist_island_planning")
+CPCg4 = 1980404 + 831 + 56 + 4 -- cayo perico player 4 cut global --("heist_island_planning")
+CPFHl = 26217 -- cayo perico fingerprint hack local ("heist") in ("fm_mission_controller_2020")
 CPPCCl = 32349 + 3  -- cayo perico plasma cutter cut local ("DLC_H4_anims_glass_cutter_Sounds") in ("fm_mission_controller_2020")
 CPSTCl = 31109 -- cayo perico drainage pipe cut local ("IntroFinished") in ("fm_mission_controller_2020")
-CPXf1 = 55789 -- cayo perico instant finish local 1
+CPXf1 = 56070 -- cayo perico instant finish local 1
 CPXf2 = 56070 + 1776 + 1 -- cayo perico instant finish local 2
 -- Doomsday Heist
 DDSHl = 1312 + 135 -- doomsday doomsday scenario hack local
@@ -153,9 +153,9 @@ DCg1 = 1968511 + 812 + 50 + 1  -- doomsday player 1 cut global --("gb_gang_ops_p
 DCg2 = 1968511 + 812 + 50 + 2 -- doomsday player 2 cut global --("gb_gang_ops_planning")
 DCg3 = 1968511 + 812 + 50 + 3  -- doomsday player 3 cut global --("gb_gang_ops_planning")
 DCg4 = 1968511 + 812 + 50 + 4 -- doomsday player 4 cut global --("gb_gang_ops_planning")
-IHPB = 55789 --Instant Heist Passed Local Base (Casino And CayoPerico)
-IHPL = 55789 + 1776 + 1 --Instant Heist Passed Locals (Casino And CayoPerico)
-NLCl = 206 + 32 + 19 + 1 --("nightclub_office_cutscene") in ("am_mp_nightclub")
+IHPB = 56070 --Instant Heist Passed Local Base (Casino And CayoPerico)
+IHPL = 56070 + 1776 + 1 --Instant Heist Passed Locals (Casino And CayoPerico)
+NLCl = 213 + 32 + 1  --("nightclub_office_cutscene") in ("am_mp_nightclub")
 SNOW = FMg + 4413
 halloweatherAddress = FMg + 32246
 
@@ -167,11 +167,11 @@ CCBL0 = 22581 + 26623
 CCBL1 = 22581 + 26623
 
 --BAS=Bag Size------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-BAS1 = 22581 + 29299
+BAS1 = FMg + 29300
 
 --PSV=Panther Statue-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-PSV = 22581 + 29551
+PSV = FMg + 29552
 
 --PDIAMOND=Pink Diamond---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -179,15 +179,15 @@ PDIAMOND = 22581 + 29549
 
 --BB=Bearer Bonds---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-BB = 22581 + 29548
+BB = FMg + 29549
 
 --RN=Ruby Necklace--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-RN = 22581 + 29547
+RN = FMg + 29548
 
 --TEQUILA=Tequila---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-TEQUILA = 22581 + 29546
+TEQUILA = FMg + 29547
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1222,9 +1222,9 @@ RTPT = Self:add_checkbox("Remove Transaction Error")
 script.register_looped("Remove Transaction Error", function(script)
 	script:yield()
 	if RTPT:is_enabled() then
-		globals.set_int(4538089, 0)
-		globals.set_int(4538090, 0)
-		globals.set_int(4538091, 0)
+		globals.set_int(4516981, 0)
+		globals.set_int(4516982, 0)
+		globals.set_int(4516983, 0)
 	else
 	end
 end)
@@ -9564,9 +9564,9 @@ roulette_outcomes_table = 1357
 roulette_ball_table     = 153
  
 local cslots = "casino_slots"
-slots_random_results_table = 1370
+slots_random_results_table = 1379
 
-prize_wheel_win_state = 300
+prize_wheel_win_state = 309
 prize_wheel_prize = 14
 prize_wheel_prize_state = 45
 
@@ -10350,7 +10350,7 @@ YetiHuntEvent = EventsFeatures:add_tab("Yeti Hunt")
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 YetiHuntEvent:add_button("Enable Yeti Hunt Event", function()
-	globals.set_int(262145 + 34951, 1) -- enable the event 1833904680
+	globals.set_int(FMg + 35041, 1) -- enable the event 1833904680
 end)
 
 YetiHuntEvent:add_button("Clue Location 1", function()
@@ -10452,7 +10452,7 @@ end)
 Achievements = CSU:add_tab("Achievements")
 
 Acv0 = false
-AG = 4546910 + 1
+AG = 4525223 + 1
 
 Achievements:add_button("Unlock All Achievements", function()
 		script.run_in_fiber(function(script)
@@ -14271,7 +14271,7 @@ local function render_weapon_editor()
 end
 
 script.register_looped("Gun Van", function()
-	gun_van_loc = globals.get_int(2652592 + 2671)
+	gun_van_loc = globals.get_int(2652581 + 2671)
 
 	if is_typing then
 		PAD.DISABLE_ALL_CONTROL_ACTIONS(0)
@@ -14282,8 +14282,11 @@ script.register_looped("Gun Van", function()
 	end
 
 	if livery_lock then
-		local value = locals.get_int("gunclub_shop", 142 + 747) | (1 << 8)
-		locals.set_int("gunclub_shop", 142 + 747, value)
+		local value = locals.get_int("gunclub_shop", 206 + 747)
+		if value ~= nil then
+			value = value | (1 << 8)
+			locals.set_int("gunclub_shop", 206 + 747, value)
+		end
 	end
 
 	if gta_plus_blip then
@@ -14309,7 +14312,7 @@ gun_van_tab:add_imgui(function()
 	ImGui.SameLine()
 
 	if ImGui.Button("Set New Gun Van Location") then
-		globals.set_int(2652592 + 2671, selected_loc)
+		globals.set_int(2652581 + 2671, selected_loc)
 	end
 
 	ImGui.SameLine()
@@ -14337,8 +14340,11 @@ gun_van_tab:add_imgui(function()
 
 	if on_tick then
 		if not livery_lock then
-			local value = locals.get_int("gunclub_shop", 142 + 747) & ~(1 << 8)
-			locals.set_int("gunclub_shop", 142 + 747, value)
+			local value = locals.get_int("gunclub_shop", 206 + 747)
+			if value ~= nil then
+				value = value & ~(1 << 8)
+				locals.set_int("gunclub_shop", 206 + 747, value)
+			end
 		end
 	end
 
@@ -15647,6 +15653,8 @@ DoomsdayHeistEditor:add_button("Instant Finish $$", function()
 	gui.show_message("Instant Heist Passed", "Activated")
 end)
 
+
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 MissionsSelectorAndCooldown = CSYON:add_tab("Missions Selector And cooldown")
@@ -15705,6 +15713,9 @@ L7NEG:add_text("https://github.com/YimMenu-Lua/Utimate-Menu")
 
 CSYOND3V = Credits:add_tab("CSYON")
 CSYOND3V:add_text("Codded This W Script With <3 To You All")
+
+PyxalonDev = Credits:add_tab("Pyxalon")
+PyxalonDev:add_text("Maintenance & Updates")
 
 PLANTINDESK = Credits:add_tab("plantindesk")
 PLANTINDESK:add_text("For His W Cuts Editor And Useful Heists Hax")
