@@ -18,7 +18,7 @@ local general_group = settings_category:add_group("General")
 local credits_group = settings_category:add_group("Credits")
 
 -- Credits
-credits_group:add_button("csyon_author","Lead Developer: CSY0N", "Open the lead developer's GitHub profile.",
+credits_group:add_button("csyon_author","[Owner] & Lead Developer: CSY0N", "Open the lead developer's GitHub profile.",
     function()
         menu.open_url("https://github.com/CSY0N")
     end
