@@ -38,5 +38,5 @@ No ETA for big updates also because i don't know actually if im going to be able
 --------------------------------------------------------------------------------------------------
 ## About
 -  By the way to anyone who ask's about the CsyonSubMenu script, is not entire mine, there is actually in credits every single person who i taked code from and who helped me with this.
-## Latest CsyonSubMenu Kiddions update was on: 05/09/2024
+## Latest and was Discountinue CsyonSubMenu Kiddions update was on: 05/09/2024 
 ## Latest CsyonSubMenu YimMenu update was on: 7/3/2026
